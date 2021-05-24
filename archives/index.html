@@ -128,7 +128,7 @@ crossorigin="anonymous"></script>
 		
 				<div class='nav-icon active_dot'>
 				
-			<a href="/archives/" title='Archivi'>
+			<a href="/archives/" title='Archives'>
 			<img src="/images/icons/blue-shadow/archive.svg" alt="">
 			</a>
 		</div>
@@ -137,7 +137,7 @@ crossorigin="anonymous"></script>
 		
 		<div class='nav-icon'>
 		
-			<a href="/search/" title='Cerca'>
+			<a href="/search/" title='Search'>
 			<img src="/images/icons/blue-shadow/search.svg" alt="">
 			</a>
 		</div>
@@ -418,6 +418,56 @@ crossorigin="anonymous"></script>
 					
 					<li>
 						<a href="/2018/08/25/java反射与代理模式/#article-comment">
+							<i class='fa fa-comments'></i> <span class='card-comment-count'>0</span>
+						</a>
+					</li>
+					<li>
+						<i class="fa fa-eye"></i> <span class='card-visit-count'>0</span>
+					</li>
+					
+					
+			</ul>
+		</div>
+	</div>
+</div>
+
+	
+		
+
+
+
+
+<div class='Card-archive' id='hashit_2878c99f400cb2295b2174da58c9697f15259d96730eab4f0fc352c76f9ab27b' data-name='es原理' data-version=''>
+	<mark class='Card-badge'></mark>
+	<div class="Card-body">
+		<h3 class='Card-title'>
+			
+				<a href="/2018/08/25/es原理/">
+			
+			Es原理</a>
+		</h3>
+		<div class="Card-meta">
+			<div class='Card-tags'>
+<div class="tags">
+	
+		
+			
+				<label class='tag-1'><a href="/tags/es/">Es</a></label>
+			
+		
+	
+	</div>
+</div>
+			<ul>
+					<li>
+						<a href="/archives/">
+							<i class='fa fa-calendar'></i> 2018-08-25
+						</a>
+					</li>
+					
+					
+					<li>
+						<a href="/2018/08/25/es原理/#article-comment">
 							<i class='fa fa-comments'></i> <span class='card-comment-count'>0</span>
 						</a>
 					</li>
@@ -722,56 +772,6 @@ crossorigin="anonymous"></script>
 </div>
 
 	
-		
-
-
-
-
-<div class='Card-archive' id='hashit_b53df92b813eda48d4c11ce32b986336485d06e8a9acd10d695e60dd915782a6' data-name='如何使用JMeter压力测试' data-version=''>
-	<mark class='Card-badge'></mark>
-	<div class="Card-body">
-		<h3 class='Card-title'>
-			
-				<a href="/2018/08/07/如何使用JMeter压力测试/">
-			
-			如何使用JMeter压力测试</a>
-		</h3>
-		<div class="Card-meta">
-			<div class='Card-tags'>
-<div class="tags">
-	
-		
-			
-				<label class='tag-1'><a href="/tags/jmeter/">Jmeter</a></label>
-			
-		
-	
-	</div>
-</div>
-			<ul>
-					<li>
-						<a href="/archives/">
-							<i class='fa fa-calendar'></i> 2018-08-07
-						</a>
-					</li>
-					
-					
-					<li>
-						<a href="/2018/08/07/如何使用JMeter压力测试/#article-comment">
-							<i class='fa fa-comments'></i> <span class='card-comment-count'>0</span>
-						</a>
-					</li>
-					<li>
-						<i class="fa fa-eye"></i> <span class='card-visit-count'>0</span>
-					</li>
-					
-					
-			</ul>
-		</div>
-	</div>
-</div>
-
-	
 	</div>
 
 
@@ -810,7 +810,7 @@ crossorigin="anonymous"></script>
 		
 				<div class='nav-icon active_dot'>
 				
-			<a href="/archives/" title='Archivi'>
+			<a href="/archives/" title='Archives'>
 			<img src="/images/icons/blue-shadow/archive.svg" alt="">
 			</a>
 		</div>
@@ -819,7 +819,7 @@ crossorigin="anonymous"></script>
 		
 		<div class='nav-icon'>
 		
-			<a href="/search/" title='Cerca'>
+			<a href="/search/" title='Search'>
 			<img src="/images/icons/blue-shadow/search.svg" alt="">
 			</a>
 		</div>
@@ -965,6 +965,14 @@ crossorigin="anonymous"></script>
           
           
           
+            var postBadge = document.querySelector('#hashit_2878c99f400cb2295b2174da58c9697f15259d96730eab4f0fc352c76f9ab27b mark.Card-badge');
+            $(postBadge).fadeOut();
+            
+          
+        
+          
+          
+          
             var postBadge = document.querySelector('#hashit_b92fe2a2b6c2d2fe4fc5be8d26bc4eb03350aad4294400554f5474ab620b483d mark.Card-badge');
             $(postBadge).fadeOut();
             
@@ -1006,14 +1014,6 @@ crossorigin="anonymous"></script>
           
           
             var postBadge = document.querySelector('#hashit_77ec8ca0bbde6a9975e3ad1d2edbed80d39569927d002548dab745764a503ece mark.Card-badge');
-            $(postBadge).fadeOut();
-            
-          
-        
-          
-          
-          
-            var postBadge = document.querySelector('#hashit_b53df92b813eda48d4c11ce32b986336485d06e8a9acd10d695e60dd915782a6 mark.Card-badge');
             $(postBadge).fadeOut();
             
           
@@ -1114,6 +1114,36 @@ crossorigin="anonymous"></script>
           });
           leanCloud.isThumbUp('/2018/08/25/java反射与代理模式/', function(isThumbUp){
               var el = document.querySelector('#hashit_2a8462db3039b78c6774bc4b73b4c524e155c18116a40663db6e6f27d92babb6 .card-thumbup-container i');
+              if(el){
+                if(isThumbUp){
+                  el.className = 'fas fa-thumbs-up';
+                }else{
+                  el.className = 'far fa-thumbs-up';
+                }
+              }
+          });
+        
+          
+          
+          // start caching post visit and comment counts
+          leanCloud.fetchIsThumbUp('/2018/08/25/es原理/', user_ip);
+          leanCloud.fetchCommentCount('/2018/08/25/es原理/');
+          leanCloud.fetchVisitCount('/2018/08/25/es原理/');
+          leanCloud.fetchThumbUpCount('/2018/08/25/es原理/');
+          leanCloud.getCommentCount('/2018/08/25/es原理/', function(count){
+              var el = document.querySelector('#hashit_2878c99f400cb2295b2174da58c9697f15259d96730eab4f0fc352c76f9ab27b .card-comment-count');
+              if(el) el.innerHTML = count;
+          });
+          leanCloud.getVisitCount('/2018/08/25/es原理/', function(count){
+              var el = document.querySelector('#hashit_2878c99f400cb2295b2174da58c9697f15259d96730eab4f0fc352c76f9ab27b .card-visit-count');
+              if(el) el.innerHTML = count;
+          });
+          leanCloud.getThumbUpCount('/2018/08/25/es原理/', function(count){
+              var el = document.querySelector('#hashit_2878c99f400cb2295b2174da58c9697f15259d96730eab4f0fc352c76f9ab27b .card-thumbup-count');
+              if(el) el.innerHTML = count;
+          });
+          leanCloud.isThumbUp('/2018/08/25/es原理/', function(isThumbUp){
+              var el = document.querySelector('#hashit_2878c99f400cb2295b2174da58c9697f15259d96730eab4f0fc352c76f9ab27b .card-thumbup-container i');
               if(el){
                 if(isThumbUp){
                   el.className = 'fas fa-thumbs-up';
@@ -1294,36 +1324,6 @@ crossorigin="anonymous"></script>
           });
           leanCloud.isThumbUp('/2018/08/07/springboot使用SpringRetry/', function(isThumbUp){
               var el = document.querySelector('#hashit_77ec8ca0bbde6a9975e3ad1d2edbed80d39569927d002548dab745764a503ece .card-thumbup-container i');
-              if(el){
-                if(isThumbUp){
-                  el.className = 'fas fa-thumbs-up';
-                }else{
-                  el.className = 'far fa-thumbs-up';
-                }
-              }
-          });
-        
-          
-          
-          // start caching post visit and comment counts
-          leanCloud.fetchIsThumbUp('/2018/08/07/如何使用JMeter压力测试/', user_ip);
-          leanCloud.fetchCommentCount('/2018/08/07/如何使用JMeter压力测试/');
-          leanCloud.fetchVisitCount('/2018/08/07/如何使用JMeter压力测试/');
-          leanCloud.fetchThumbUpCount('/2018/08/07/如何使用JMeter压力测试/');
-          leanCloud.getCommentCount('/2018/08/07/如何使用JMeter压力测试/', function(count){
-              var el = document.querySelector('#hashit_b53df92b813eda48d4c11ce32b986336485d06e8a9acd10d695e60dd915782a6 .card-comment-count');
-              if(el) el.innerHTML = count;
-          });
-          leanCloud.getVisitCount('/2018/08/07/如何使用JMeter压力测试/', function(count){
-              var el = document.querySelector('#hashit_b53df92b813eda48d4c11ce32b986336485d06e8a9acd10d695e60dd915782a6 .card-visit-count');
-              if(el) el.innerHTML = count;
-          });
-          leanCloud.getThumbUpCount('/2018/08/07/如何使用JMeter压力测试/', function(count){
-              var el = document.querySelector('#hashit_b53df92b813eda48d4c11ce32b986336485d06e8a9acd10d695e60dd915782a6 .card-thumbup-count');
-              if(el) el.innerHTML = count;
-          });
-          leanCloud.isThumbUp('/2018/08/07/如何使用JMeter压力测试/', function(isThumbUp){
-              var el = document.querySelector('#hashit_b53df92b813eda48d4c11ce32b986336485d06e8a9acd10d695e60dd915782a6 .card-thumbup-container i');
               if(el){
                 if(isThumbUp){
                   el.className = 'fas fa-thumbs-up';

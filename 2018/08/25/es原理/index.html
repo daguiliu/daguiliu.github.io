@@ -10,7 +10,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
   
-      <title>docker部署es - 望尽天涯路</title>
+      <title>es原理 - 望尽天涯路</title>
   
 
   
@@ -267,14 +267,14 @@ crossorigin="anonymous"></script>
 
 
 
-<article class="article" id="/2021/05/20/docker部署es/" data-name='docker部署es' data-version="">
+<article class="article" id="/2018/08/25/es原理/" data-name='es原理' data-version="">
 
     <!-- Title -->
     <div class='article-header'>
          
          <h1 class='article-title'>
-            <a href="/2021/05/20/docker部署es/">
-                Docker部署es
+            <a href="/2018/08/25/es原理/">
+                Es原理
             </a>
         </h1>
         <!-- TODO: support nested categories,display them nicely -->
@@ -293,7 +293,7 @@ crossorigin="anonymous"></script>
     <!-- Date and Author -->
     <div class='article-meta'>
     <ul>
-            <li><i class='fa fa-calendar'></i> 2021-05-20</li>
+            <li><i class='fa fa-calendar'></i> 2018-08-25</li>
             
             <li class='comment-button'><a href='#article-comment'><i class='fa fa-comments'></i> <span id='article-comment-count'>0</span></a></li>
             <li><i class="fa fa-eye"></i> <span id='article-visit-count'>0</span></li>
@@ -314,15 +314,7 @@ crossorigin="anonymous"></script>
 <div class="tags">
 	
 		
-			<label class='tag-1'><a href="/tags/docker/">Docker</a></label>
-		
-	
-		
-			<label class='tag-2'><a href="/tags/es/">Es</a></label>
-		
-	
-		
-			<label class='tag-3'><a href="/tags/linux/">Linux</a></label>
+			<label class='tag-1'><a href="/tags/es/">Es</a></label>
 		
 	
 	</div>
@@ -381,9 +373,8 @@ crossorigin="anonymous"></script>
   <h3>Quick Read</h3>
 </div>
 <div class="card-text">
-  <p id='text-post-summary'>1、拉取镜像1docker pull elasticsearch:7.4.2
-2、创建并启动容器1docker run -d --name es -p 9200:9200 -p 9300:9300 -e ES_JAVA_OPTS="-Xms512m -Xmx512m" -e "discovery.type=single-node" elasticsearch:7.4.2
-创建时，调整内存的分配“ES_JAVA_OPTS=-Xms512m...</p>
+  <p id='text-post-summary'>##系統架构
+一个运行中的 Elasticsearch 实例称为一个节点，而集群是由一个或者多个拥有相同cluster.name 配置的节点组成， 它们共同承担数据和负载的压力。当有节点加入集群中或者从集群中移除节点时，集群将会重新平均分布所有的数据。当一个节点被选举成为主节点时， 它将负责管理集群范围内的所有变更，例如增加、 删除索引，或者增加、删除节点等。 而主节点并不需要涉及到文档级别的变更和搜索等操作，所以当集群只拥有一个主节点的情况下，即使流量的增加它也不会成为瓶颈。...</p>
 </div>
         </div> -->
     </div>
@@ -409,24 +400,25 @@ crossorigin="anonymous"></script>
 
     </div>
     <div class='article-content'>
-    <p>1、拉取镜像<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull elasticsearch:<span class="number">7.4</span>.2</span><br></pre></td></tr></table></figure></p>
-<p>2、创建并启动容器<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name es -p <span class="number">9200</span>:<span class="number">9200</span> -p <span class="number">9300</span>:<span class="number">9300</span> -e ES_JAVA_OPTS=<span class="string">"-Xms512m -Xmx512m"</span> -e <span class="string">"discovery.type=single-node"</span> elasticsearch:<span class="number">7.4</span>.2</span><br></pre></td></tr></table></figure></p>
-<p>创建时，调整内存的分配“ES_JAVA_OPTS=-Xms512m -Xmx512m”，<br>增加9200/9300的端口映射。</p>
-<p>3、检测是否可以正常访问</p>
-<p><a href="http://192.168.1.162:9200/" target="_blank" rel="noopener">http://192.168.1.162:9200/</a><br><img src="/images/02.png" alt="avatar"></p>
-<p>4、找到es配置文件elasticsearch.yaml，配置跨域<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it es /bin/bash</span><br><span class="line">cd config</span><br><span class="line">vi elasticsearch.yaml</span><br></pre></td></tr></table></figure></p>
-<p>在文件末尾加上以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http.cors.enabled: true</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br></pre></td></tr></table></figure></p>
-<p><img src="img.png" alt="img.png"></p>
+    <p>##系統架构<br><img src="img_5.png" alt="img_5.png"></p>
+<p>一个运行中的 Elasticsearch 实例称为一个节点，而集群是由一个或者多个拥有相同<br>cluster.name 配置的节点组成， 它们共同承担数据和负载的压力。当有节点加入集群中或者从集群中移除节点时，集群将会重新平均分布所有的数据。<br>当一个节点被选举成为主节点时， 它将负责管理集群范围内的所有变更，例如增加、 删除索引，或者增加、删除节点等。 而主节点并不需要涉及到文档级别的变更和搜索等操作，所以当集群只拥有一个主节点的情况下，即使流量的增加它也不会成为瓶颈。 任何节点都可以成为主节点。</p>
+<p>###分片Shards<br>一个索引可以存储超出单个节点硬件限制的大量数据。比如，一个具有10亿文档数据的索引占据 1TB 的磁盘空间，任一节点都可能没有这样大的磁盘空间。或者单个节点处理搜索请求，响应太慢。<br>为了解决这个问题，Elasticsearch提供了将索引划分成多份的能力，每一份就称之为分片。创建一个索引的时候，就可以指定想要的分片的数量。每个分片本身也是一个功能完善并且独立的“索引”，这个“索引”可以被放置到集群中的任何节点上。</p>
+<p>分片很重要，主要有两方面的原因：</p>
 <ul>
-<li>cluster.name：自定义集群名称；</li>
-<li>network.host：当前es节点绑定的ip地址；</li>
-<li>http.cors.enabled：是否支持跨域，默认为false；</li>
-<li>http.cors.allow-origin：当设置允许跨域，默认为*，表示支持所有域名，如果我们只是允许某些网站能访问，那么可以使用正则表达式。</li>
+<li>水平分割，提供系统容量</li>
+<li>分片后可以进行分布式的、并行的操作，进而提高性能/吞吐量。<br>###副本Replicas<br>在一个网络/云的环境里，某个分片/节点故障随时都可能发生。为了解决这个问题， Elasticsearch允许创建分片的一份或多份拷贝，这些拷贝叫做复制分片(副本)。</li>
 </ul>
-<p>5、安装es-head可视化插件<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull elasticsearch-head:<span class="number">5</span></span><br><span class="line">docker run -d -p <span class="number">9100</span>:<span class="number">9100</span> mobz/elasticsearch-head:<span class="number">5</span></span><br></pre></td></tr></table></figure></p>
-<p>访问地址：<a href="http://192.168.1.162:9100/" target="_blank" rel="noopener">http://192.168.1.162:9100/</a></p>
-<p>6、安装对应版本的kibana<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull kibana:<span class="number">7.4</span>.2</span><br><span class="line">docker run -d -p <span class="number">5601</span>:<span class="number">5601</span> kibana:<span class="number">7.4</span>.2</span><br></pre></td></tr></table></figure></p>
-<p>访问地址：<a href="http://192.168.1.162:5601" target="_blank" rel="noopener">http://192.168.1.162:5601</a></p>
+<p>复制分片之所以重要，有两个主要原因：</p>
+<ul>
+<li>在分片/节点失败的情况下，提供了高可用性。因为这个原因，复制分片从不与原/主分片置于同一节点上是非常重要的。</li>
+<li>扩展系统的搜索量/吞吐量，因为搜索可以在所有的副本上并行运行。</li>
+</ul>
+<p>分片和复制的数量可以在索引创建的时候指定。在索引创建之后，你可以在任何时候动态地改变复制的数量，但是你事后不能改变分片的数量。</p>
+<p>###路由计算<br>当我们创建文档时，es如何决定这个文档应当被存储在分片1还是分片2中？是根据下面这个公式决定的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shard = hash(routing) % number_of_primary_shards</span><br></pre></td></tr></table></figure></p>
+<p>routing 是一个可变值，默认是文档的 _id ，也可以设置成一个自定义的值。 routing 通过hash 函数生成一个数字，然后这个数字再除以 number_of_primary_shards （主分片的数量）后得到余数。</p>
+<p>###分片控制<br>我们可以发送请求到集群中的任一节点。每个节点都有能力处理任意请求，每个节点都知道集群中任一文档位置。集群默认就会做负载均衡。</p>
+<p><img src="img_3.png" alt="img_3.png"></p>
+<p>###数据写流程</p>
 
     
     </div>
@@ -616,7 +608,7 @@ crossorigin="anonymous"></script>
   loadjs(['/libs/jshashes/hashes.min.js', '/libs/js-cookie/src/js.cookie.js', '/js/post.v2.js'], 'post-version');
   loadjs.ready('post-version', function(){
     
-    new Postv2('hashit_bb2952e514a4da98f1808853cd487d165a11f69963757023ce5ab22bd1598fbf').update('hashit_6f08470c103d73098237c250298175da8a8a790340aa211065aebdb41f88f3fd', function(){});
+    new Postv2('hashit_2878c99f400cb2295b2174da58c9697f15259d96730eab4f0fc352c76f9ab27b').update('hashit_2b17a6392b8ee86f174941554a407b9f9933c3411c394d5970ed13b00564de52', function(){});
   });
   
 </script>
@@ -632,42 +624,42 @@ crossorigin="anonymous"></script>
     
     LeanCloud.init('OWA6ER4W1Bs9uSbznd4IdXnf-gzGzoHsz', 'vjt17SYhxGl9L7oCD37DbXsi');
     var leanCloud = LeanCloud.getInstance();
-    leanCloud.fetchIsThumbUp('/2021/05/20/docker部署es/', user_ip);
+    leanCloud.fetchIsThumbUp('/2018/08/25/es原理/', user_ip);
     document.getElementById('thumb-up-button').addEventListener('click', function(e){
-      leanCloud.isThumbUp('/2021/05/20/docker部署es/', function(isThumbUp){
+      leanCloud.isThumbUp('/2018/08/25/es原理/', function(isThumbUp){
         console.log('is thumb up:' + isThumbUp);
         if(isThumbUp){
-          leanCloud.removeThumbUpRecord('/2021/05/20/docker部署es/', user_ip);
+          leanCloud.removeThumbUpRecord('/2018/08/25/es原理/', user_ip);
           document.getElementById('thumb-up-icon').className = "far fa-thumbs-up fa-lg";
           
         }else{
-          leanCloud.addThumbUpRecord('/2021/05/20/docker部署es/', user_ip);
+          leanCloud.addThumbUpRecord('/2018/08/25/es原理/', user_ip);
           document.getElementById('thumb-up-icon').className = "fas fa-thumbs-up fa-lg";
         }
-        leanCloud.getThumbUpCount('/2021/05/20/docker部署es/', function(count){
+        leanCloud.getThumbUpCount('/2018/08/25/es原理/', function(count){
             console.log('thumb up count: ' + count)
             var el = document.getElementById('article-thumbup-count');
             if(el) el.innerHTML = count;
         });
       });
     });
-    leanCloud.addVisitRecord('/2021/05/20/docker部署es/', user_ip);
-    leanCloud.fetchCommentCount('/2021/05/20/docker部署es/');
-    leanCloud.fetchVisitCount('/2021/05/20/docker部署es/');
-    leanCloud.fetchThumbUpCount('/2021/05/20/docker部署es/');
-    leanCloud.getCommentCount('/2021/05/20/docker部署es/', function(count){
+    leanCloud.addVisitRecord('/2018/08/25/es原理/', user_ip);
+    leanCloud.fetchCommentCount('/2018/08/25/es原理/');
+    leanCloud.fetchVisitCount('/2018/08/25/es原理/');
+    leanCloud.fetchThumbUpCount('/2018/08/25/es原理/');
+    leanCloud.getCommentCount('/2018/08/25/es原理/', function(count){
         var el = document.querySelector('#article-comment-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.getVisitCount('/2021/05/20/docker部署es/', function(count){
+    leanCloud.getVisitCount('/2018/08/25/es原理/', function(count){
         var el = document.querySelector('#article-visit-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.getThumbUpCount('/2021/05/20/docker部署es/', function(count){
+    leanCloud.getThumbUpCount('/2018/08/25/es原理/', function(count){
         var el = document.getElementById('article-thumbup-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.isThumbUp('/2021/05/20/docker部署es/', function(isThumbUp){
+    leanCloud.isThumbUp('/2018/08/25/es原理/', function(isThumbUp){
         console.log('init thumb up:' + isThumbUp);
         if(isThumbUp){
           document.getElementById('thumb-up-icon').className = "fas fa-thumbs-up fa-lg";
