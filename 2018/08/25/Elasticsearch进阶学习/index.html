@@ -10,7 +10,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
   
-      <title>es原理 - 望尽天涯路</title>
+      <title>Elasticsearch进阶学习 - 望尽天涯路</title>
   
 
   
@@ -142,7 +142,7 @@ crossorigin="anonymous"></script>
 		
 				<div class='nav-icon'>
 				
-			<a href="/archives/" title='Archives'>
+			<a href="/archives/" title='Archivi'>
 			<img src="/images/icons/blue-shadow/archive.svg" alt="">
 			</a>
 		</div>
@@ -151,7 +151,7 @@ crossorigin="anonymous"></script>
 		
 		<div class='nav-icon'>
 		
-			<a href="/search/" title='Search'>
+			<a href="/search/" title='Cerca'>
 			<img src="/images/icons/blue-shadow/search.svg" alt="">
 			</a>
 		</div>
@@ -267,14 +267,14 @@ crossorigin="anonymous"></script>
 
 
 
-<article class="article" id="/2018/08/25/es原理/" data-name='es原理' data-version="">
+<article class="article" id="/2018/08/25/Elasticsearch进阶学习/" data-name='Elasticsearch进阶学习' data-version="">
 
     <!-- Title -->
     <div class='article-header'>
          
          <h1 class='article-title'>
-            <a href="/2018/08/25/es原理/">
-                Es原理
+            <a href="/2018/08/25/Elasticsearch进阶学习/">
+                Elasticsearch进阶学习
             </a>
         </h1>
         <!-- TODO: support nested categories,display them nicely -->
@@ -400,7 +400,7 @@ crossorigin="anonymous"></script>
 
     </div>
     <div class='article-content'>
-    <p>##系統架构<br><img src="img_5.png" alt="img_5.png"></p>
+    <p>##系統架构<br><img src="/images/img_5.png" alt="avatar"></p>
 <p>一个运行中的 Elasticsearch 实例称为一个节点，而集群是由一个或者多个拥有相同<br>cluster.name 配置的节点组成， 它们共同承担数据和负载的压力。当有节点加入集群中或者从集群中移除节点时，集群将会重新平均分布所有的数据。<br>当一个节点被选举成为主节点时， 它将负责管理集群范围内的所有变更，例如增加、 删除索引，或者增加、删除节点等。 而主节点并不需要涉及到文档级别的变更和搜索等操作，所以当集群只拥有一个主节点的情况下，即使流量的增加它也不会成为瓶颈。 任何节点都可以成为主节点。</p>
 <p>###分片Shards<br>一个索引可以存储超出单个节点硬件限制的大量数据。比如，一个具有10亿文档数据的索引占据 1TB 的磁盘空间，任一节点都可能没有这样大的磁盘空间。或者单个节点处理搜索请求，响应太慢。<br>为了解决这个问题，Elasticsearch提供了将索引划分成多份的能力，每一份就称之为分片。创建一个索引的时候，就可以指定想要的分片的数量。每个分片本身也是一个功能完善并且独立的“索引”，这个“索引”可以被放置到集群中的任何节点上。</p>
 <p>分片很重要，主要有两方面的原因：</p>
@@ -417,7 +417,7 @@ crossorigin="anonymous"></script>
 <p>###路由计算<br>当我们创建文档时，es如何决定这个文档应当被存储在分片1还是分片2中？是根据下面这个公式决定的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shard = hash(routing) % number_of_primary_shards</span><br></pre></td></tr></table></figure></p>
 <p>routing 是一个可变值，默认是文档的 _id ，也可以设置成一个自定义的值。 routing 通过hash 函数生成一个数字，然后这个数字再除以 number_of_primary_shards （主分片的数量）后得到余数。</p>
 <p>###分片控制<br>我们可以发送请求到集群中的任一节点。每个节点都有能力处理任意请求，每个节点都知道集群中任一文档位置。集群默认就会做负载均衡。</p>
-<p><img src="img_3.png" alt="img_3.png"></p>
+<p><img src="/images/img_3.png" alt="avatar"></p>
 <p>###数据写流程</p>
 
     
@@ -427,7 +427,7 @@ crossorigin="anonymous"></script>
         <div class="article-comment" id='article-comment'>
             
 
-<h1>Comment</h1>
+<h1>Commento</h1>
 
   
     <div id='valine'></div>
@@ -481,7 +481,7 @@ crossorigin="anonymous"></script>
 		
 				<div class='nav-icon'>
 				
-			<a href="/archives/" title='Archives'>
+			<a href="/archives/" title='Archivi'>
 			<img src="/images/icons/blue-shadow/archive.svg" alt="">
 			</a>
 		</div>
@@ -490,7 +490,7 @@ crossorigin="anonymous"></script>
 		
 		<div class='nav-icon'>
 		
-			<a href="/search/" title='Search'>
+			<a href="/search/" title='Cerca'>
 			<img src="/images/icons/blue-shadow/search.svg" alt="">
 			</a>
 		</div>
@@ -608,7 +608,7 @@ crossorigin="anonymous"></script>
   loadjs(['/libs/jshashes/hashes.min.js', '/libs/js-cookie/src/js.cookie.js', '/js/post.v2.js'], 'post-version');
   loadjs.ready('post-version', function(){
     
-    new Postv2('hashit_2878c99f400cb2295b2174da58c9697f15259d96730eab4f0fc352c76f9ab27b').update('hashit_2b17a6392b8ee86f174941554a407b9f9933c3411c394d5970ed13b00564de52', function(){});
+    new Postv2('hashit_00bd9b707f902f9ca6856aa8ac3484a2d24f93bf4691e8b4896ea603b8861770').update('hashit_2b17a6392b8ee86f174941554a407b9f9933c3411c394d5970ed13b00564de52', function(){});
   });
   
 </script>
@@ -624,42 +624,42 @@ crossorigin="anonymous"></script>
     
     LeanCloud.init('OWA6ER4W1Bs9uSbznd4IdXnf-gzGzoHsz', 'vjt17SYhxGl9L7oCD37DbXsi');
     var leanCloud = LeanCloud.getInstance();
-    leanCloud.fetchIsThumbUp('/2018/08/25/es原理/', user_ip);
+    leanCloud.fetchIsThumbUp('/2018/08/25/Elasticsearch进阶学习/', user_ip);
     document.getElementById('thumb-up-button').addEventListener('click', function(e){
-      leanCloud.isThumbUp('/2018/08/25/es原理/', function(isThumbUp){
+      leanCloud.isThumbUp('/2018/08/25/Elasticsearch进阶学习/', function(isThumbUp){
         console.log('is thumb up:' + isThumbUp);
         if(isThumbUp){
-          leanCloud.removeThumbUpRecord('/2018/08/25/es原理/', user_ip);
+          leanCloud.removeThumbUpRecord('/2018/08/25/Elasticsearch进阶学习/', user_ip);
           document.getElementById('thumb-up-icon').className = "far fa-thumbs-up fa-lg";
           
         }else{
-          leanCloud.addThumbUpRecord('/2018/08/25/es原理/', user_ip);
+          leanCloud.addThumbUpRecord('/2018/08/25/Elasticsearch进阶学习/', user_ip);
           document.getElementById('thumb-up-icon').className = "fas fa-thumbs-up fa-lg";
         }
-        leanCloud.getThumbUpCount('/2018/08/25/es原理/', function(count){
+        leanCloud.getThumbUpCount('/2018/08/25/Elasticsearch进阶学习/', function(count){
             console.log('thumb up count: ' + count)
             var el = document.getElementById('article-thumbup-count');
             if(el) el.innerHTML = count;
         });
       });
     });
-    leanCloud.addVisitRecord('/2018/08/25/es原理/', user_ip);
-    leanCloud.fetchCommentCount('/2018/08/25/es原理/');
-    leanCloud.fetchVisitCount('/2018/08/25/es原理/');
-    leanCloud.fetchThumbUpCount('/2018/08/25/es原理/');
-    leanCloud.getCommentCount('/2018/08/25/es原理/', function(count){
+    leanCloud.addVisitRecord('/2018/08/25/Elasticsearch进阶学习/', user_ip);
+    leanCloud.fetchCommentCount('/2018/08/25/Elasticsearch进阶学习/');
+    leanCloud.fetchVisitCount('/2018/08/25/Elasticsearch进阶学习/');
+    leanCloud.fetchThumbUpCount('/2018/08/25/Elasticsearch进阶学习/');
+    leanCloud.getCommentCount('/2018/08/25/Elasticsearch进阶学习/', function(count){
         var el = document.querySelector('#article-comment-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.getVisitCount('/2018/08/25/es原理/', function(count){
+    leanCloud.getVisitCount('/2018/08/25/Elasticsearch进阶学习/', function(count){
         var el = document.querySelector('#article-visit-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.getThumbUpCount('/2018/08/25/es原理/', function(count){
+    leanCloud.getThumbUpCount('/2018/08/25/Elasticsearch进阶学习/', function(count){
         var el = document.getElementById('article-thumbup-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.isThumbUp('/2018/08/25/es原理/', function(isThumbUp){
+    leanCloud.isThumbUp('/2018/08/25/Elasticsearch进阶学习/', function(isThumbUp){
         console.log('init thumb up:' + isThumbUp);
         if(isThumbUp){
           document.getElementById('thumb-up-icon').className = "fas fa-thumbs-up fa-lg";
