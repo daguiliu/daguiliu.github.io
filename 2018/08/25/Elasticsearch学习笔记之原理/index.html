@@ -10,7 +10,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
   
-      <title>docker部署es - 望尽天涯路</title>
+      <title>Elasticsearch学习笔记之原理 - 望尽天涯路</title>
   
 
   
@@ -130,7 +130,7 @@ crossorigin="anonymous"></script>
 
 <div class='toc-container'>
 <i class="far fa-times-circle" id='toc-close' onclick='closeTOC(event);' ontouchstart='closeTOC(event);'></i>
-
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ES概述"><span class="toc-number">1.</span> <span class="toc-text">ES概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES架构"><span class="toc-number">2.</span> <span class="toc-text">ES架构</span></a></li></ol>
 </div>
 <div class="toc-button" onclick='toggleTOC(event);' ontouchstart='toggleTOC(event);'>
     <img src="/images/icons/blue-shadow/toc.svg" alt="">
@@ -142,7 +142,7 @@ crossorigin="anonymous"></script>
 		
 				<div class='nav-icon'>
 				
-			<a href="/archives/" title='Archivi'>
+			<a href="/archives/" title='Archives'>
 			<img src="/images/icons/blue-shadow/archive.svg" alt="">
 			</a>
 		</div>
@@ -151,7 +151,7 @@ crossorigin="anonymous"></script>
 		
 		<div class='nav-icon'>
 		
-			<a href="/search/" title='Cerca'>
+			<a href="/search/" title='Search'>
 			<img src="/images/icons/blue-shadow/search.svg" alt="">
 			</a>
 		</div>
@@ -267,14 +267,14 @@ crossorigin="anonymous"></script>
 
 
 
-<article class="article" id="/2021/05/20/docker部署es/" data-name='docker部署es' data-version="">
+<article class="article" id="/2018/08/25/Elasticsearch学习笔记之原理/" data-name='Elasticsearch学习笔记之原理' data-version="">
 
     <!-- Title -->
     <div class='article-header'>
          
          <h1 class='article-title'>
-            <a href="/2021/05/20/docker部署es/">
-                Docker部署es
+            <a href="/2018/08/25/Elasticsearch学习笔记之原理/">
+                Elasticsearch学习笔记之原理
             </a>
         </h1>
         <!-- TODO: support nested categories,display them nicely -->
@@ -293,7 +293,7 @@ crossorigin="anonymous"></script>
     <!-- Date and Author -->
     <div class='article-meta'>
     <ul>
-            <li><i class='fa fa-calendar'></i> 2021-05-20</li>
+            <li><i class='fa fa-calendar'></i> 2018-08-25</li>
             
             <li class='comment-button'><a href='#article-comment'><i class='fa fa-comments'></i> <span id='article-comment-count'>0</span></a></li>
             <li><i class="fa fa-eye"></i> <span id='article-visit-count'>0</span></li>
@@ -314,15 +314,7 @@ crossorigin="anonymous"></script>
 <div class="tags">
 	
 		
-			<label class='tag-1'><a href="/tags/docker/">Docker</a></label>
-		
-	
-		
-			<label class='tag-2'><a href="/tags/es/">Es</a></label>
-		
-	
-		
-			<label class='tag-3'><a href="/tags/linux/">Linux</a></label>
+			<label class='tag-1'><a href="/tags/es/">Es</a></label>
 		
 	
 	</div>
@@ -381,9 +373,11 @@ crossorigin="anonymous"></script>
   <h3>Quick Read</h3>
 </div>
 <div class="card-text">
-  <p id='text-post-summary'>1、拉取镜像1docker pull elasticsearch:7.4.2
-2、创建并启动容器1docker run -d --name es -p 9200:9200 -p 9300:9300 -e ES_JAVA_OPTS="-Xms512m -Xmx512m" -e "discovery.type=single-node" elasticsearch:7.4.2
-创建时，调整内存的分配“ES_JAVA_OPTS=-Xms512m...</p>
+  <p id='text-post-summary'>ES概述ElasticSearch,简称es。es是一个开源的高拓展的分布式全文检索引擎，它可以近乎实施的存储、检索数据；本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数据。es也使用java开发并使用Lucene 作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从而让全文搜索变得简单。
+谁在使用
+维基百科，类似百度百科，全文检索，高亮，搜索推荐
+国外新闻网站，类似搜狐新闻，用户行为日志（点击，浏览，收藏，评论）+社交网络数据，数据分析…
+Stack Overflow国外的程序异常讨论论坛...</p>
 </div>
         </div> -->
     </div>
@@ -401,7 +395,7 @@ crossorigin="anonymous"></script>
 
 <div class='toc-container'>
 <i class="far fa-times-circle" id='toc-close' onclick='closeTOC(event);' ontouchstart='closeTOC(event);'></i>
-
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ES概述"><span class="toc-number">1.</span> <span class="toc-text">ES概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES架构"><span class="toc-number">2.</span> <span class="toc-text">ES架构</span></a></li></ol>
 </div>
 <div class="toc-button" onclick='toggleTOC(event);' ontouchstart='toggleTOC(event);'>
     <img src="/images/icons/blue-shadow/toc.svg" alt="">
@@ -409,25 +403,33 @@ crossorigin="anonymous"></script>
 
     </div>
     <div class='article-content'>
-    <p>1、拉取镜像<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull elasticsearch:<span class="number">7.4</span>.2</span><br></pre></td></tr></table></figure></p>
-<p>2、创建并启动容器<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name es -p <span class="number">9200</span>:<span class="number">9200</span> -p <span class="number">9300</span>:<span class="number">9300</span> -e ES_JAVA_OPTS=<span class="string">"-Xms512m -Xmx512m"</span> -e <span class="string">"discovery.type=single-node"</span> elasticsearch:<span class="number">7.4</span>.2</span><br></pre></td></tr></table></figure></p>
-<p>创建时，调整内存的分配“ES_JAVA_OPTS=-Xms512m -Xmx512m”，<br>增加9200/9300的端口映射。</p>
-<p>3、检测是否可以正常访问</p>
-<p><a href="http://192.168.1.162:9200/" target="_blank" rel="noopener">http://192.168.1.162:9200/</a><br><img src="/images/02.png" alt="avatar"></p>
-<p>4、找到es配置文件elasticsearch.yaml，配置跨域<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it es /bin/bash</span><br><span class="line">cd config</span><br><span class="line">vi elasticsearch.yaml</span><br></pre></td></tr></table></figure></p>
-<p>在文件末尾加上以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http.cors.enabled: true</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br></pre></td></tr></table></figure></p>
-<p><img src="/images/img.png" alt="avatar"></p>
-<ul>
-<li>cluster.name：自定义集群名称；</li>
-<li>network.host：当前es节点绑定的ip地址；</li>
-<li>http.cors.enabled：是否支持跨域，默认为false；</li>
-<li>http.cors.allow-origin：当设置允许跨域，默认为*，表示支持所有域名，如果我们只是允许某些网站能访问，那么可以使用正则表达式。</li>
+    <h2 id="ES概述"><a href="#ES概述" class="headerlink" title="ES概述"></a>ES概述</h2><p>ElasticSearch,简称es。es是一个开源的高拓展的分布式全文检索引擎，它可以近乎实施的存储、检索数据；本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数据。es也使用java开发并使用Lucene 作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从而让全文搜索变得简单。</p>
+<h3 id="谁在使用"><a href="#谁在使用" class="headerlink" title="谁在使用"></a>谁在使用</h3><ul>
+<li>维基百科，类似百度百科，全文检索，高亮，搜索推荐</li>
+<li>国外新闻网站，类似搜狐新闻，用户行为日志（点击，浏览，收藏，评论）+社交网络数据，数据分析…</li>
+<li>Stack Overflow国外的程序异常讨论论坛 </li>
+<li>GitHub（开源代码管理），搜索上千亿行代码</li>
+<li>站内搜索，商业智能系统，电商网站</li>
+<li>日志数据分析，logstash采集日志，ES进行复杂的数据分析，ELK技术（elasticsearch+logstash+kibana）<h2 id="ES架构"><a href="#ES架构" class="headerlink" title="ES架构"></a>ES架构</h2><img src="/images/img_5.png" alt="avatar"></li>
 </ul>
-<p>5、安装es-head可视化插件<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull elasticsearch-head:<span class="number">5</span></span><br><span class="line">docker run -d -p <span class="number">9100</span>:<span class="number">9100</span> mobz/elasticsearch-head:<span class="number">5</span></span><br></pre></td></tr></table></figure></p>
-<p>访问地址：<a href="http://192.168.1.162:9100/" target="_blank" rel="noopener">http://192.168.1.162:9100/</a></p>
-<p>6、安装对应版本的kibana<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull kibana:<span class="number">7.4</span>.2</span><br><span class="line">docker run -d -p <span class="number">5601</span>:<span class="number">5601</span> kibana:<span class="number">7.4</span>.2</span><br></pre></td></tr></table></figure></p>
-<p>访问地址：<a href="http://192.168.1.162:5601" target="_blank" rel="noopener">http://192.168.1.162:5601</a></p>
-
+<p>一个运行中的Elasticsearch实例称为一个节点，而集群是由一个或者多个拥有相同cluster.name配置的节点组成，它们共同承担数据和负载的压力。当有节点加入集群中或者从集群中移除节点时，集群将会重新平均分布所有的数据。<br>当一个节点被选举成为主节点时，它将负责管理集群范围内的所有变更，例如增加、删除索引，或者增加、删除节点等。而主节点并不需要涉及到文档级别的变更和搜索等操作，所以当集群只拥有一个主节点的情况下，即使流量的增加它也不会成为瓶颈。 任何节点都可以成为主节点。</p>
+<h3 id="分片Shards"><a href="#分片Shards" class="headerlink" title="分片Shards"></a>分片Shards</h3><p>一个索引可以存储超出单个节点硬件限制的大量数据。比如，一个具有10亿文档数据的索引占据 1TB 的磁盘空间，任一节点都可能没有这样大的磁盘空间。或者单个节点处理搜索请求，响应太慢。<br>为了解决这个问题，Elasticsearch提供了将索引划分成多份的能力，每一份就称之为分片。创建一个索引的时候，就可以指定想要的分片的数量。每个分片本身也是一个功能完善并且独立的“索引”，这个“索引”可以被放置到集群中的任何节点上。</p>
+<p>分片很重要，主要有两方面的原因：</p>
+<ul>
+<li>水平分割，提供系统容量</li>
+<li>分片后可以进行分布式的、并行的操作，进而提高性能/吞吐量。<h3 id="副本Replicas"><a href="#副本Replicas" class="headerlink" title="副本Replicas"></a>副本Replicas</h3>在一个网络/云的环境里，某个分片/节点故障随时都可能发生。为了解决这个问题， Elasticsearch允许创建分片的一份或多份拷贝，这些拷贝叫做复制分片(副本)。</li>
+</ul>
+<p>复制分片之所以重要，有两个主要原因：</p>
+<ul>
+<li>在分片/节点失败的情况下，提供了高可用性。因为这个原因，复制分片从不与原/主分片置于同一节点上是非常重要的。</li>
+<li>扩展系统的搜索量/吞吐量，因为搜索可以在所有的副本上并行运行。</li>
+</ul>
+<p>分片和复制的数量可以在索引创建的时候指定。在索引创建之后，你可以在任何时候动态地改变复制的数量，但是你事后不能改变分片的数量。</p>
+<h3 id="路由计算"><a href="#路由计算" class="headerlink" title="路由计算"></a>路由计算</h3><p>当我们创建文档时，es如何决定这个文档应当被存储在分片1还是分片2中？是根据下面这个公式决定的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shard = hash(routing) % number_of_primary_shards</span><br></pre></td></tr></table></figure></p>
+<p>routing 是一个可变值，默认是文档的 _id ，也可以设置成一个自定义的值。 routing 通过hash 函数生成一个数字，然后这个数字再除以 number_of_primary_shards （主分片的数量）后得到余数。</p>
+<h3 id="分片控制"><a href="#分片控制" class="headerlink" title="分片控制"></a>分片控制</h3><p>我们可以发送请求到集群中的任一节点。每个节点都有能力处理任意请求，每个节点都知道集群中任一文档位置。集群默认就会做负载均衡。</p>
+<p><img src="/images/img_3.png" alt="avatar"></p>
+<h3 id="数据写流程"><a href="#数据写流程" class="headerlink" title="数据写流程"></a>数据写流程</h3>
     
     </div>
     
@@ -435,7 +437,7 @@ crossorigin="anonymous"></script>
         <div class="article-comment" id='article-comment'>
             
 
-<h1>Commento</h1>
+<h1>Comment</h1>
 
   
     <div id='valine'></div>
@@ -477,7 +479,7 @@ crossorigin="anonymous"></script>
 
 <div class='toc-container'>
 <i class="far fa-times-circle" id='toc-close' onclick='closeTOC(event);' ontouchstart='closeTOC(event);'></i>
-
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ES概述"><span class="toc-number">1.</span> <span class="toc-text">ES概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES架构"><span class="toc-number">2.</span> <span class="toc-text">ES架构</span></a></li></ol>
 </div>
 <div class="toc-button" onclick='toggleTOC(event);' ontouchstart='toggleTOC(event);'>
     <img src="/images/icons/blue-shadow/toc.svg" alt="">
@@ -489,7 +491,7 @@ crossorigin="anonymous"></script>
 		
 				<div class='nav-icon'>
 				
-			<a href="/archives/" title='Archivi'>
+			<a href="/archives/" title='Archives'>
 			<img src="/images/icons/blue-shadow/archive.svg" alt="">
 			</a>
 		</div>
@@ -498,7 +500,7 @@ crossorigin="anonymous"></script>
 		
 		<div class='nav-icon'>
 		
-			<a href="/search/" title='Cerca'>
+			<a href="/search/" title='Search'>
 			<img src="/images/icons/blue-shadow/search.svg" alt="">
 			</a>
 		</div>
@@ -616,7 +618,7 @@ crossorigin="anonymous"></script>
   loadjs(['/libs/jshashes/hashes.min.js', '/libs/js-cookie/src/js.cookie.js', '/js/post.v2.js'], 'post-version');
   loadjs.ready('post-version', function(){
     
-    new Postv2('hashit_bb2952e514a4da98f1808853cd487d165a11f69963757023ce5ab22bd1598fbf').update('hashit_6f08470c103d73098237c250298175da8a8a790340aa211065aebdb41f88f3fd', function(){});
+    new Postv2('hashit_32494365c0c98329280ae9357e575192d4cd343c259a45ae5d13282e535ec5c6').update('hashit_d53b3d3c618ce7e4cbf6f7588dca87acf3faae1cb659d21713bd735b34eacd11', function(){});
   });
   
 </script>
@@ -632,42 +634,42 @@ crossorigin="anonymous"></script>
     
     LeanCloud.init('OWA6ER4W1Bs9uSbznd4IdXnf-gzGzoHsz', 'vjt17SYhxGl9L7oCD37DbXsi');
     var leanCloud = LeanCloud.getInstance();
-    leanCloud.fetchIsThumbUp('/2021/05/20/docker部署es/', user_ip);
+    leanCloud.fetchIsThumbUp('/2018/08/25/Elasticsearch学习笔记之原理/', user_ip);
     document.getElementById('thumb-up-button').addEventListener('click', function(e){
-      leanCloud.isThumbUp('/2021/05/20/docker部署es/', function(isThumbUp){
+      leanCloud.isThumbUp('/2018/08/25/Elasticsearch学习笔记之原理/', function(isThumbUp){
         console.log('is thumb up:' + isThumbUp);
         if(isThumbUp){
-          leanCloud.removeThumbUpRecord('/2021/05/20/docker部署es/', user_ip);
+          leanCloud.removeThumbUpRecord('/2018/08/25/Elasticsearch学习笔记之原理/', user_ip);
           document.getElementById('thumb-up-icon').className = "far fa-thumbs-up fa-lg";
           
         }else{
-          leanCloud.addThumbUpRecord('/2021/05/20/docker部署es/', user_ip);
+          leanCloud.addThumbUpRecord('/2018/08/25/Elasticsearch学习笔记之原理/', user_ip);
           document.getElementById('thumb-up-icon').className = "fas fa-thumbs-up fa-lg";
         }
-        leanCloud.getThumbUpCount('/2021/05/20/docker部署es/', function(count){
+        leanCloud.getThumbUpCount('/2018/08/25/Elasticsearch学习笔记之原理/', function(count){
             console.log('thumb up count: ' + count)
             var el = document.getElementById('article-thumbup-count');
             if(el) el.innerHTML = count;
         });
       });
     });
-    leanCloud.addVisitRecord('/2021/05/20/docker部署es/', user_ip);
-    leanCloud.fetchCommentCount('/2021/05/20/docker部署es/');
-    leanCloud.fetchVisitCount('/2021/05/20/docker部署es/');
-    leanCloud.fetchThumbUpCount('/2021/05/20/docker部署es/');
-    leanCloud.getCommentCount('/2021/05/20/docker部署es/', function(count){
+    leanCloud.addVisitRecord('/2018/08/25/Elasticsearch学习笔记之原理/', user_ip);
+    leanCloud.fetchCommentCount('/2018/08/25/Elasticsearch学习笔记之原理/');
+    leanCloud.fetchVisitCount('/2018/08/25/Elasticsearch学习笔记之原理/');
+    leanCloud.fetchThumbUpCount('/2018/08/25/Elasticsearch学习笔记之原理/');
+    leanCloud.getCommentCount('/2018/08/25/Elasticsearch学习笔记之原理/', function(count){
         var el = document.querySelector('#article-comment-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.getVisitCount('/2021/05/20/docker部署es/', function(count){
+    leanCloud.getVisitCount('/2018/08/25/Elasticsearch学习笔记之原理/', function(count){
         var el = document.querySelector('#article-visit-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.getThumbUpCount('/2021/05/20/docker部署es/', function(count){
+    leanCloud.getThumbUpCount('/2018/08/25/Elasticsearch学习笔记之原理/', function(count){
         var el = document.getElementById('article-thumbup-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.isThumbUp('/2021/05/20/docker部署es/', function(isThumbUp){
+    leanCloud.isThumbUp('/2018/08/25/Elasticsearch学习笔记之原理/', function(isThumbUp){
         console.log('init thumb up:' + isThumbUp);
         if(isThumbUp){
           document.getElementById('thumb-up-icon').className = "fas fa-thumbs-up fa-lg";
