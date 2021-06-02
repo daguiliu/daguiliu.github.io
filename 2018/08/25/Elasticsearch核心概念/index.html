@@ -10,7 +10,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
   
-      <title>Elasticsearch学习笔记之原理 - 望尽天涯路</title>
+      <title>Elasticsearch核心概念 - 望尽天涯路</title>
   
 
   
@@ -130,7 +130,7 @@ crossorigin="anonymous"></script>
 
 <div class='toc-container'>
 <i class="far fa-times-circle" id='toc-close' onclick='closeTOC(event);' ontouchstart='closeTOC(event);'></i>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ES概述"><span class="toc-number">1.</span> <span class="toc-text">ES概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES架构"><span class="toc-number">2.</span> <span class="toc-text">ES架构</span></a></li></ol>
+
 </div>
 <div class="toc-button" onclick='toggleTOC(event);' ontouchstart='toggleTOC(event);'>
     <img src="/images/icons/blue-shadow/toc.svg" alt="">
@@ -142,7 +142,7 @@ crossorigin="anonymous"></script>
 		
 				<div class='nav-icon'>
 				
-			<a href="/archives/" title='归档'>
+			<a href="/archives/" title='Archives'>
 			<img src="/images/icons/blue-shadow/archive.svg" alt="">
 			</a>
 		</div>
@@ -151,7 +151,7 @@ crossorigin="anonymous"></script>
 		
 		<div class='nav-icon'>
 		
-			<a href="/search/" title='搜索'>
+			<a href="/search/" title='Search'>
 			<img src="/images/icons/blue-shadow/search.svg" alt="">
 			</a>
 		</div>
@@ -267,14 +267,14 @@ crossorigin="anonymous"></script>
 
 
 
-<article class="article" id="/2018/08/25/Elasticsearch学习笔记之原理/" data-name='Elasticsearch学习笔记之原理' data-version="">
+<article class="article" id="/2018/08/25/Elasticsearch核心概念/" data-name='Elasticsearch核心概念' data-version="">
 
     <!-- Title -->
     <div class='article-header'>
          
          <h1 class='article-title'>
-            <a href="/2018/08/25/Elasticsearch学习笔记之原理/">
-                Elasticsearch学习笔记之原理
+            <a href="/2018/08/25/Elasticsearch核心概念/">
+                Elasticsearch核心概念
             </a>
         </h1>
         <!-- TODO: support nested categories,display them nicely -->
@@ -395,7 +395,7 @@ Stack Overflow国外的程序异常讨论论坛...</p>
 
 <div class='toc-container'>
 <i class="far fa-times-circle" id='toc-close' onclick='closeTOC(event);' ontouchstart='closeTOC(event);'></i>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ES概述"><span class="toc-number">1.</span> <span class="toc-text">ES概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES架构"><span class="toc-number">2.</span> <span class="toc-text">ES架构</span></a></li></ol>
+
 </div>
 <div class="toc-button" onclick='toggleTOC(event);' ontouchstart='toggleTOC(event);'>
     <img src="/images/icons/blue-shadow/toc.svg" alt="">
@@ -403,15 +403,18 @@ Stack Overflow国外的程序异常讨论论坛...</p>
 
     </div>
     <div class='article-content'>
-    <h2 id="ES概述"><a href="#ES概述" class="headerlink" title="ES概述"></a>ES概述</h2><p>ElasticSearch,简称es。es是一个开源的高拓展的分布式全文检索引擎，它可以近乎实施的存储、检索数据；本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数据。es也使用java开发并使用Lucene 作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从而让全文搜索变得简单。</p>
+    <h3 id="ES概述"><a href="#ES概述" class="headerlink" title="ES概述"></a>ES概述</h3><p>ElasticSearch,简称es。es是一个开源的高拓展的分布式全文检索引擎，它可以近乎实施的存储、检索数据；本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数据。es也使用java开发并使用Lucene 作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从而让全文搜索变得简单。</p>
 <h3 id="谁在使用"><a href="#谁在使用" class="headerlink" title="谁在使用"></a>谁在使用</h3><ul>
 <li>维基百科，类似百度百科，全文检索，高亮，搜索推荐</li>
 <li>国外新闻网站，类似搜狐新闻，用户行为日志（点击，浏览，收藏，评论）+社交网络数据，数据分析…</li>
 <li>Stack Overflow国外的程序异常讨论论坛 </li>
 <li>GitHub（开源代码管理），搜索上千亿行代码</li>
 <li>站内搜索，商业智能系统，电商网站</li>
-<li>日志数据分析，logstash采集日志，ES进行复杂的数据分析，ELK技术（elasticsearch+logstash+kibana）<h2 id="ES架构"><a href="#ES架构" class="headerlink" title="ES架构"></a>ES架构</h2><img src="/images/img_5.png" alt="avatar"></li>
+<li>日志数据分析，logstash采集日志，ES进行复杂的数据分析，ELK技术（elasticsearch+logstash+kibana）</li>
 </ul>
+<h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><p>ElasticSearch是面向文档型的数据库，一条数据在这里就是一个文档。比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;name&quot; :     &quot;John&quot;,</span><br><span class="line">&quot;sex&quot; :      &quot;Male&quot;,</span><br><span class="line">&quot;age&quot; :      25,</span><br><span class="line">&quot;birthDate&quot;: &quot;1990/05/01&quot;,</span><br><span class="line">&quot;about&quot; :    &quot;I love to go rock climbing&quot;,</span><br><span class="line">&quot;interests&quot;: [ &quot;sports&quot;, &quot;music&quot; ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ElasticSearch是面向文档型的数据库，一条数据在这里就是一个文档。比如：<br><img src="img_1.png" alt="avatar"></p>
+<h3 id="倒排索引"><a href="#倒排索引" class="headerlink" title="倒排索引"></a>倒排索引</h3><h3 id="ES架构"><a href="#ES架构" class="headerlink" title="ES架构"></a>ES架构</h3><p><img src="/images/img_5.png" alt="avatar"></p>
 <p>一个运行中的Elasticsearch实例称为一个节点，而集群是由一个或者多个拥有相同cluster.name配置的节点组成，它们共同承担数据和负载的压力。当有节点加入集群中或者从集群中移除节点时，集群将会重新平均分布所有的数据。<br>当一个节点被选举成为主节点时，它将负责管理集群范围内的所有变更，例如增加、删除索引，或者增加、删除节点等。而主节点并不需要涉及到文档级别的变更和搜索等操作，所以当集群只拥有一个主节点的情况下，即使流量的增加它也不会成为瓶颈。 任何节点都可以成为主节点。</p>
 <h3 id="分片Shards"><a href="#分片Shards" class="headerlink" title="分片Shards"></a>分片Shards</h3><p>一个索引可以存储超出单个节点硬件限制的大量数据。比如，一个具有10亿文档数据的索引占据 1TB 的磁盘空间，任一节点都可能没有这样大的磁盘空间。或者单个节点处理搜索请求，响应太慢。<br>为了解决这个问题，Elasticsearch提供了将索引划分成多份的能力，每一份就称之为分片。创建一个索引的时候，就可以指定想要的分片的数量。每个分片本身也是一个功能完善并且独立的“索引”，这个“索引”可以被放置到集群中的任何节点上。</p>
 <p>分片很重要，主要有两方面的原因：</p>
@@ -437,7 +440,7 @@ Stack Overflow国外的程序异常讨论论坛...</p>
         <div class="article-comment" id='article-comment'>
             
 
-<h1>评论</h1>
+<h1>Comment</h1>
 
   
     <div id='valine'></div>
@@ -479,7 +482,7 @@ Stack Overflow国外的程序异常讨论论坛...</p>
 
 <div class='toc-container'>
 <i class="far fa-times-circle" id='toc-close' onclick='closeTOC(event);' ontouchstart='closeTOC(event);'></i>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ES概述"><span class="toc-number">1.</span> <span class="toc-text">ES概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES架构"><span class="toc-number">2.</span> <span class="toc-text">ES架构</span></a></li></ol>
+
 </div>
 <div class="toc-button" onclick='toggleTOC(event);' ontouchstart='toggleTOC(event);'>
     <img src="/images/icons/blue-shadow/toc.svg" alt="">
@@ -491,7 +494,7 @@ Stack Overflow国外的程序异常讨论论坛...</p>
 		
 				<div class='nav-icon'>
 				
-			<a href="/archives/" title='归档'>
+			<a href="/archives/" title='Archives'>
 			<img src="/images/icons/blue-shadow/archive.svg" alt="">
 			</a>
 		</div>
@@ -500,7 +503,7 @@ Stack Overflow国外的程序异常讨论论坛...</p>
 		
 		<div class='nav-icon'>
 		
-			<a href="/search/" title='搜索'>
+			<a href="/search/" title='Search'>
 			<img src="/images/icons/blue-shadow/search.svg" alt="">
 			</a>
 		</div>
@@ -618,7 +621,7 @@ Stack Overflow国外的程序异常讨论论坛...</p>
   loadjs(['/libs/jshashes/hashes.min.js', '/libs/js-cookie/src/js.cookie.js', '/js/post.v2.js'], 'post-version');
   loadjs.ready('post-version', function(){
     
-    new Postv2('hashit_32494365c0c98329280ae9357e575192d4cd343c259a45ae5d13282e535ec5c6').update('hashit_d53b3d3c618ce7e4cbf6f7588dca87acf3faae1cb659d21713bd735b34eacd11', function(){});
+    new Postv2('hashit_83ac8a0df2e4c31d39a87e2b040b94ccb91a9ff6d634e9b5b809115f7f933718').update('hashit_44ac3cc0bf474b0129539186897ec5dbbac7511be3128649e1955286bdad27e2', function(){});
   });
   
 </script>
@@ -634,42 +637,42 @@ Stack Overflow国外的程序异常讨论论坛...</p>
     
     LeanCloud.init('OWA6ER4W1Bs9uSbznd4IdXnf-gzGzoHsz', 'vjt17SYhxGl9L7oCD37DbXsi');
     var leanCloud = LeanCloud.getInstance();
-    leanCloud.fetchIsThumbUp('/2018/08/25/Elasticsearch学习笔记之原理/', user_ip);
+    leanCloud.fetchIsThumbUp('/2018/08/25/Elasticsearch核心概念/', user_ip);
     document.getElementById('thumb-up-button').addEventListener('click', function(e){
-      leanCloud.isThumbUp('/2018/08/25/Elasticsearch学习笔记之原理/', function(isThumbUp){
+      leanCloud.isThumbUp('/2018/08/25/Elasticsearch核心概念/', function(isThumbUp){
         console.log('is thumb up:' + isThumbUp);
         if(isThumbUp){
-          leanCloud.removeThumbUpRecord('/2018/08/25/Elasticsearch学习笔记之原理/', user_ip);
+          leanCloud.removeThumbUpRecord('/2018/08/25/Elasticsearch核心概念/', user_ip);
           document.getElementById('thumb-up-icon').className = "far fa-thumbs-up fa-lg";
           
         }else{
-          leanCloud.addThumbUpRecord('/2018/08/25/Elasticsearch学习笔记之原理/', user_ip);
+          leanCloud.addThumbUpRecord('/2018/08/25/Elasticsearch核心概念/', user_ip);
           document.getElementById('thumb-up-icon').className = "fas fa-thumbs-up fa-lg";
         }
-        leanCloud.getThumbUpCount('/2018/08/25/Elasticsearch学习笔记之原理/', function(count){
+        leanCloud.getThumbUpCount('/2018/08/25/Elasticsearch核心概念/', function(count){
             console.log('thumb up count: ' + count)
             var el = document.getElementById('article-thumbup-count');
             if(el) el.innerHTML = count;
         });
       });
     });
-    leanCloud.addVisitRecord('/2018/08/25/Elasticsearch学习笔记之原理/', user_ip);
-    leanCloud.fetchCommentCount('/2018/08/25/Elasticsearch学习笔记之原理/');
-    leanCloud.fetchVisitCount('/2018/08/25/Elasticsearch学习笔记之原理/');
-    leanCloud.fetchThumbUpCount('/2018/08/25/Elasticsearch学习笔记之原理/');
-    leanCloud.getCommentCount('/2018/08/25/Elasticsearch学习笔记之原理/', function(count){
+    leanCloud.addVisitRecord('/2018/08/25/Elasticsearch核心概念/', user_ip);
+    leanCloud.fetchCommentCount('/2018/08/25/Elasticsearch核心概念/');
+    leanCloud.fetchVisitCount('/2018/08/25/Elasticsearch核心概念/');
+    leanCloud.fetchThumbUpCount('/2018/08/25/Elasticsearch核心概念/');
+    leanCloud.getCommentCount('/2018/08/25/Elasticsearch核心概念/', function(count){
         var el = document.querySelector('#article-comment-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.getVisitCount('/2018/08/25/Elasticsearch学习笔记之原理/', function(count){
+    leanCloud.getVisitCount('/2018/08/25/Elasticsearch核心概念/', function(count){
         var el = document.querySelector('#article-visit-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.getThumbUpCount('/2018/08/25/Elasticsearch学习笔记之原理/', function(count){
+    leanCloud.getThumbUpCount('/2018/08/25/Elasticsearch核心概念/', function(count){
         var el = document.getElementById('article-thumbup-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.isThumbUp('/2018/08/25/Elasticsearch学习笔记之原理/', function(isThumbUp){
+    leanCloud.isThumbUp('/2018/08/25/Elasticsearch核心概念/', function(isThumbUp){
         console.log('init thumb up:' + isThumbUp);
         if(isThumbUp){
           document.getElementById('thumb-up-icon').className = "fas fa-thumbs-up fa-lg";
