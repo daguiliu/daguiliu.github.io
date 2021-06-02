@@ -128,7 +128,7 @@ crossorigin="anonymous"></script>
 		
 				<div class='nav-icon active_dot'>
 				
-			<a href="/archives/" title='Archives'>
+			<a href="/archives/" title='Archivi'>
 			<img src="/images/icons/blue-shadow/archive.svg" alt="">
 			</a>
 		</div>
@@ -137,7 +137,7 @@ crossorigin="anonymous"></script>
 		
 		<div class='nav-icon'>
 		
-			<a href="/search/" title='Search'>
+			<a href="/search/" title='Cerca'>
 			<img src="/images/icons/blue-shadow/search.svg" alt="">
 			</a>
 		</div>
@@ -223,6 +223,46 @@ crossorigin="anonymous"></script>
 		<h2 class='archive-title'></h2>
 	
 	<div class="archive-cards">
+	
+		
+
+
+
+
+<div class='Card-archive' id='hashit_2f5db12108f3cb8e437afdbd6b5818e5db4a259473e727e71bd0a297fa7736dd' data-name='' data-version=''>
+	<mark class='Card-badge'></mark>
+	<div class="Card-body">
+		<h3 class='Card-title'>
+			
+				<a href="/2021/06/02/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/">
+			
+			No title</a>
+		</h3>
+		<div class="Card-meta">
+			<div class='Card-tags'></div>
+			<ul>
+					<li>
+						<a href="/archives/">
+							<i class='fa fa-calendar'></i> 2021-06-02
+						</a>
+					</li>
+					
+					
+					<li>
+						<a href="/2021/06/02/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/#article-comment">
+							<i class='fa fa-comments'></i> <span class='card-comment-count'>0</span>
+						</a>
+					</li>
+					<li>
+						<i class="fa fa-eye"></i> <span class='card-visit-count'>0</span>
+					</li>
+					
+					
+			</ul>
+		</div>
+	</div>
+</div>
+
 	
 		
 
@@ -722,56 +762,6 @@ crossorigin="anonymous"></script>
 </div>
 
 	
-		
-
-
-
-
-<div class='Card-archive' id='hashit_77ec8ca0bbde6a9975e3ad1d2edbed80d39569927d002548dab745764a503ece' data-name='springboot使用SpringRetry' data-version=''>
-	<mark class='Card-badge'></mark>
-	<div class="Card-body">
-		<h3 class='Card-title'>
-			
-				<a href="/2018/08/07/springboot使用SpringRetry/">
-			
-			springboot使用SpringRetry</a>
-		</h3>
-		<div class="Card-meta">
-			<div class='Card-tags'>
-<div class="tags">
-	
-		
-			
-				<label class='tag-1'><a href="/tags/springboot/">Springboot</a></label>
-			
-		
-	
-	</div>
-</div>
-			<ul>
-					<li>
-						<a href="/archives/">
-							<i class='fa fa-calendar'></i> 2018-08-07
-						</a>
-					</li>
-					
-					
-					<li>
-						<a href="/2018/08/07/springboot使用SpringRetry/#article-comment">
-							<i class='fa fa-comments'></i> <span class='card-comment-count'>0</span>
-						</a>
-					</li>
-					<li>
-						<i class="fa fa-eye"></i> <span class='card-visit-count'>0</span>
-					</li>
-					
-					
-			</ul>
-		</div>
-	</div>
-</div>
-
-	
 	</div>
 
 
@@ -810,7 +800,7 @@ crossorigin="anonymous"></script>
 		
 				<div class='nav-icon active_dot'>
 				
-			<a href="/archives/" title='Archives'>
+			<a href="/archives/" title='Archivi'>
 			<img src="/images/icons/blue-shadow/archive.svg" alt="">
 			</a>
 		</div>
@@ -819,7 +809,7 @@ crossorigin="anonymous"></script>
 		
 		<div class='nav-icon'>
 		
-			<a href="/search/" title='Search'>
+			<a href="/search/" title='Cerca'>
 			<img src="/images/icons/blue-shadow/search.svg" alt="">
 			</a>
 		</div>
@@ -941,6 +931,14 @@ crossorigin="anonymous"></script>
           
           
           
+            var postBadge = document.querySelector('#hashit_2f5db12108f3cb8e437afdbd6b5818e5db4a259473e727e71bd0a297fa7736dd mark.Card-badge');
+            $(postBadge).fadeOut();
+            
+          
+        
+          
+          
+          
             var postBadge = document.querySelector('#hashit_bb0cdbfd86ddfbf15eb3334b6d23e4ab13efb4b19fdd336e9c6f4cbfba074890 mark.Card-badge');
             $(postBadge).fadeOut();
             
@@ -1010,14 +1008,6 @@ crossorigin="anonymous"></script>
             
           
         
-          
-          
-          
-            var postBadge = document.querySelector('#hashit_77ec8ca0bbde6a9975e3ad1d2edbed80d39569927d002548dab745764a503ece mark.Card-badge');
-            $(postBadge).fadeOut();
-            
-          
-        
       }
     })
   
@@ -1032,6 +1022,36 @@ crossorigin="anonymous"></script>
       success: function(){
           LeanCloud.init('OWA6ER4W1Bs9uSbznd4IdXnf-gzGzoHsz', 'vjt17SYhxGl9L7oCD37DbXsi');
           var leanCloud = LeanCloud.getInstance();
+        
+          
+          
+          // start caching post visit and comment counts
+          leanCloud.fetchIsThumbUp('/2021/06/02/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', user_ip);
+          leanCloud.fetchCommentCount('/2021/06/02/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/');
+          leanCloud.fetchVisitCount('/2021/06/02/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/');
+          leanCloud.fetchThumbUpCount('/2021/06/02/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/');
+          leanCloud.getCommentCount('/2021/06/02/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', function(count){
+              var el = document.querySelector('#hashit_2f5db12108f3cb8e437afdbd6b5818e5db4a259473e727e71bd0a297fa7736dd .card-comment-count');
+              if(el) el.innerHTML = count;
+          });
+          leanCloud.getVisitCount('/2021/06/02/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', function(count){
+              var el = document.querySelector('#hashit_2f5db12108f3cb8e437afdbd6b5818e5db4a259473e727e71bd0a297fa7736dd .card-visit-count');
+              if(el) el.innerHTML = count;
+          });
+          leanCloud.getThumbUpCount('/2021/06/02/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', function(count){
+              var el = document.querySelector('#hashit_2f5db12108f3cb8e437afdbd6b5818e5db4a259473e727e71bd0a297fa7736dd .card-thumbup-count');
+              if(el) el.innerHTML = count;
+          });
+          leanCloud.isThumbUp('/2021/06/02/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', function(isThumbUp){
+              var el = document.querySelector('#hashit_2f5db12108f3cb8e437afdbd6b5818e5db4a259473e727e71bd0a297fa7736dd .card-thumbup-container i');
+              if(el){
+                if(isThumbUp){
+                  el.className = 'fas fa-thumbs-up';
+                }else{
+                  el.className = 'far fa-thumbs-up';
+                }
+              }
+          });
         
           
           
@@ -1294,36 +1314,6 @@ crossorigin="anonymous"></script>
           });
           leanCloud.isThumbUp('/2018/08/17/深入分析Volatile的实现原理/', function(isThumbUp){
               var el = document.querySelector('#hashit_0bd2c865b90121eef2910b553a41d79aaf9a65cae971ad047a2c73ab42edd28a .card-thumbup-container i');
-              if(el){
-                if(isThumbUp){
-                  el.className = 'fas fa-thumbs-up';
-                }else{
-                  el.className = 'far fa-thumbs-up';
-                }
-              }
-          });
-        
-          
-          
-          // start caching post visit and comment counts
-          leanCloud.fetchIsThumbUp('/2018/08/07/springboot使用SpringRetry/', user_ip);
-          leanCloud.fetchCommentCount('/2018/08/07/springboot使用SpringRetry/');
-          leanCloud.fetchVisitCount('/2018/08/07/springboot使用SpringRetry/');
-          leanCloud.fetchThumbUpCount('/2018/08/07/springboot使用SpringRetry/');
-          leanCloud.getCommentCount('/2018/08/07/springboot使用SpringRetry/', function(count){
-              var el = document.querySelector('#hashit_77ec8ca0bbde6a9975e3ad1d2edbed80d39569927d002548dab745764a503ece .card-comment-count');
-              if(el) el.innerHTML = count;
-          });
-          leanCloud.getVisitCount('/2018/08/07/springboot使用SpringRetry/', function(count){
-              var el = document.querySelector('#hashit_77ec8ca0bbde6a9975e3ad1d2edbed80d39569927d002548dab745764a503ece .card-visit-count');
-              if(el) el.innerHTML = count;
-          });
-          leanCloud.getThumbUpCount('/2018/08/07/springboot使用SpringRetry/', function(count){
-              var el = document.querySelector('#hashit_77ec8ca0bbde6a9975e3ad1d2edbed80d39569927d002548dab745764a503ece .card-thumbup-count');
-              if(el) el.innerHTML = count;
-          });
-          leanCloud.isThumbUp('/2018/08/07/springboot使用SpringRetry/', function(isThumbUp){
-              var el = document.querySelector('#hashit_77ec8ca0bbde6a9975e3ad1d2edbed80d39569927d002548dab745764a503ece .card-thumbup-container i');
               if(el){
                 if(isThumbUp){
                   el.className = 'fas fa-thumbs-up';

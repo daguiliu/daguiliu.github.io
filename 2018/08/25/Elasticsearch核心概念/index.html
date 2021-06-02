@@ -139,7 +139,7 @@ crossorigin="anonymous"></script>
 		
 				<div class='nav-icon'>
 				
-			<a href="/archives/" title='Archives'>
+			<a href="/archives/" title='Archivi'>
 			<img src="/images/icons/blue-shadow/archive.svg" alt="">
 			</a>
 		</div>
@@ -148,7 +148,7 @@ crossorigin="anonymous"></script>
 		
 		<div class='nav-icon'>
 		
-			<a href="/search/" title='Search'>
+			<a href="/search/" title='Cerca'>
 			<img src="/images/icons/blue-shadow/search.svg" alt="">
 			</a>
 		</div>
@@ -374,7 +374,7 @@ crossorigin="anonymous"></script>
 谁在使用
 维基百科，类似百度百科，全文检索，高亮，搜索推荐
 国外新闻网站，类似搜狐新闻，用户行为日志（点击，浏览，收藏，评论）+社交网络数据，数据分析…
-Stack...</p>
+Stack Overflow国外的程序异常讨论论坛...</p>
 </div>
         </div> -->
     </div>
@@ -401,13 +401,12 @@ Stack...</p>
 <h3 id="谁在使用"><a href="#谁在使用" class="headerlink" title="谁在使用"></a>谁在使用</h3><ul>
 <li>维基百科，类似百度百科，全文检索，高亮，搜索推荐</li>
 <li>国外新闻网站，类似搜狐新闻，用户行为日志（点击，浏览，收藏，评论）+社交网络数据，数据分析…</li>
-<li>Stack Overflow国外的程序异常讨论论坛</li>
+<li>Stack Overflow国外的程序异常讨论论坛 </li>
 <li>GitHub（开源代码管理），搜索上千亿行代码</li>
 <li>站内搜索，商业智能系统，电商网站</li>
 <li>日志数据分析，logstash采集日志，ES进行复杂的数据分析，ELK技术（elasticsearch+logstash+kibana）</li>
 </ul>
-<h3 id="索引、类型、文档"><a href="#索引、类型、文档" class="headerlink" title="索引、类型、文档"></a>索引、类型、文档</h3><p>ElasticSearch是面向文档型的数据库，一条数据在这里就是一个文档。比如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;name&quot; :     &quot;John&quot;,</span><br><span class="line">&quot;sex&quot; :      &quot;Male&quot;,</span><br><span class="line">&quot;age&quot; :      25,</span><br><span class="line">&quot;birthDate&quot;: &quot;1990/05/01&quot;,</span><br><span class="line">&quot;about&quot; :    &quot;I love to go rock climbing&quot;,</span><br><span class="line">&quot;interests&quot;: [ &quot;sports&quot;, &quot;music&quot; ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="数据存储方式"><a href="#数据存储方式" class="headerlink" title="数据存储方式"></a>数据存储方式</h3><p>ElasticSearch是面向文档型的数据库，一条数据在这里就是一个文档。比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;name&quot; :     &quot;John&quot;,</span><br><span class="line">&quot;sex&quot; :      &quot;Male&quot;,</span><br><span class="line">&quot;age&quot; :      25,</span><br><span class="line">&quot;birthDate&quot;: &quot;1990/05/01&quot;,</span><br><span class="line">&quot;about&quot; :    &quot;I love to go rock climbing&quot;,</span><br><span class="line">&quot;interests&quot;: [ &quot;sports&quot;, &quot;music&quot; ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>ElasticSearch是面向文档型的数据库，一条数据在这里就是一个文档。比如：</p>
 <table>
 <thead>
@@ -493,21 +492,19 @@ Stack...</p>
 <p>分片很重要，主要有两方面的原因：</p>
 <ul>
 <li>水平分割，提供系统容量</li>
-<li>分片后可以进行分布式的、并行的操作，进而提高性能/吞吐量。</li>
+<li>分片后可以进行分布式的、并行的操作，进而提高性能/吞吐量。<h3 id="副本Replicas"><a href="#副本Replicas" class="headerlink" title="副本Replicas"></a>副本Replicas</h3>在一个网络/云的环境里，某个分片/节点故障随时都可能发生。为了解决这个问题， Elasticsearch允许创建分片的一份或多份拷贝，这些拷贝叫做复制分片(副本)。</li>
 </ul>
-<h3 id="副本Replicas"><a href="#副本Replicas" class="headerlink" title="副本Replicas"></a>副本Replicas</h3><p>在一个网络/云的环境里，某个分片/节点故障随时都可能发生。为了解决这个问题， Elasticsearch允许创建分片的一份或多份拷贝，这些拷贝叫做复制分片(副本)。</p>
 <p>复制分片之所以重要，有两个主要原因：</p>
 <ul>
 <li>在分片/节点失败的情况下，提供了高可用性。因为这个原因，复制分片从不与原/主分片置于同一节点上是非常重要的。</li>
 <li>扩展系统的搜索量/吞吐量，因为搜索可以在所有的副本上并行运行。</li>
 </ul>
 <p>分片和复制的数量可以在索引创建的时候指定。在索引创建之后，你可以在任何时候动态地改变复制的数量，但是你事后不能改变分片的数量。</p>
-<h3 id="路由计算"><a href="#路由计算" class="headerlink" title="路由计算"></a>路由计算</h3><p>当我们创建文档时，es如何决定这个文档应当被存储在分片1还是分片2中？是根据下面这个公式决定的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shard = hash(routing) % number_of_primary_shards</span><br></pre></td></tr></table></figure>
+<h3 id="路由计算"><a href="#路由计算" class="headerlink" title="路由计算"></a>路由计算</h3><p>当我们创建文档时，es如何决定这个文档应当被存储在分片1还是分片2中？是根据下面这个公式决定的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shard = hash(routing) % number_of_primary_shards</span><br></pre></td></tr></table></figure></p>
 <p>routing 是一个可变值，默认是文档的 _id ，也可以设置成一个自定义的值。 routing 通过hash 函数生成一个数字，然后这个数字再除以 number_of_primary_shards （主分片的数量）后得到余数。</p>
 <h3 id="分片控制"><a href="#分片控制" class="headerlink" title="分片控制"></a>分片控制</h3><p>我们可以发送请求到集群中的任一节点。每个节点都有能力处理任意请求，每个节点都知道集群中任一文档位置。集群默认就会做负载均衡。</p>
 <p><img src="/images/img_3.png" alt="avatar"></p>
-
+<h3 id="数据写流程"><a href="#数据写流程" class="headerlink" title="数据写流程"></a>数据写流程</h3>
     
     </div>
     
@@ -515,7 +512,7 @@ Stack...</p>
         <div class="article-comment" id='article-comment'>
             
 
-<h1>Comment</h1>
+<h1>Commento</h1>
 
   
     <div id='valine'></div>
@@ -566,7 +563,7 @@ Stack...</p>
 		
 				<div class='nav-icon'>
 				
-			<a href="/archives/" title='Archives'>
+			<a href="/archives/" title='Archivi'>
 			<img src="/images/icons/blue-shadow/archive.svg" alt="">
 			</a>
 		</div>
@@ -575,7 +572,7 @@ Stack...</p>
 		
 		<div class='nav-icon'>
 		
-			<a href="/search/" title='Search'>
+			<a href="/search/" title='Cerca'>
 			<img src="/images/icons/blue-shadow/search.svg" alt="">
 			</a>
 		</div>
@@ -693,7 +690,7 @@ Stack...</p>
   loadjs(['/libs/jshashes/hashes.min.js', '/libs/js-cookie/src/js.cookie.js', '/js/post.v2.js'], 'post-version');
   loadjs.ready('post-version', function(){
     
-    new Postv2('hashit_83ac8a0df2e4c31d39a87e2b040b94ccb91a9ff6d634e9b5b809115f7f933718').update('hashit_01830c9dd2297ffc7b9e910e6a3d0affe15de5f182164b70c8b0d2b868af8d40', function(){});
+    new Postv2('hashit_83ac8a0df2e4c31d39a87e2b040b94ccb91a9ff6d634e9b5b809115f7f933718').update('hashit_7b55160c18bad50697597574452c4e5f601e8c99ade184285c18753849925b32', function(){});
   });
   
 </script>
