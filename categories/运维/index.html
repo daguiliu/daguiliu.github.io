@@ -333,6 +333,56 @@ crossorigin="anonymous"></script>
 </div>
 
 	
+		
+
+
+
+
+<div class='Card-archive' id='hashit_580dc4fc24d7c921d4de2bc63144f8616a5dc5641c29b548d11a1fef11145c03' data-name='Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码' data-version=''>
+	<mark class='Card-badge'></mark>
+	<div class="Card-body">
+		<h3 class='Card-title'>
+			
+				<a href="/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/">
+			
+			Elasticsearch源码-使用Intellij IDEA和remote Debug调试源代码</a>
+		</h3>
+		<div class="Card-meta">
+			<div class='Card-tags'>
+<div class="tags">
+	
+		
+			
+				<label class='tag-1'><a href="/tags/es/">Es</a></label>
+			
+		
+	
+	</div>
+</div>
+			<ul>
+					<li>
+						<a href="/archives/">
+							<i class='fa fa-calendar'></i> 2018-08-25
+						</a>
+					</li>
+					
+					
+					<li>
+						<a href="/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/#article-comment">
+							<i class='fa fa-comments'></i> <span class='card-comment-count'>0</span>
+						</a>
+					</li>
+					<li>
+						<i class="fa fa-eye"></i> <span class='card-visit-count'>0</span>
+					</li>
+					
+					
+			</ul>
+		</div>
+	</div>
+</div>
+
+	
 	</div>
 
 
@@ -526,6 +576,14 @@ crossorigin="anonymous"></script>
             
           
         
+          
+          
+          
+            var postBadge = document.querySelector('#hashit_580dc4fc24d7c921d4de2bc63144f8616a5dc5641c29b548d11a1fef11145c03 mark.Card-badge');
+            $(postBadge).fadeOut();
+            
+          
+        
       }
     })
   
@@ -592,6 +650,36 @@ crossorigin="anonymous"></script>
           });
           leanCloud.isThumbUp('/2018/08/25/Elasticsearch核心概念/', function(isThumbUp){
               var el = document.querySelector('#hashit_83ac8a0df2e4c31d39a87e2b040b94ccb91a9ff6d634e9b5b809115f7f933718 .card-thumbup-container i');
+              if(el){
+                if(isThumbUp){
+                  el.className = 'fas fa-thumbs-up';
+                }else{
+                  el.className = 'far fa-thumbs-up';
+                }
+              }
+          });
+        
+          
+          
+          // start caching post visit and comment counts
+          leanCloud.fetchIsThumbUp('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', user_ip);
+          leanCloud.fetchCommentCount('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/');
+          leanCloud.fetchVisitCount('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/');
+          leanCloud.fetchThumbUpCount('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/');
+          leanCloud.getCommentCount('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', function(count){
+              var el = document.querySelector('#hashit_580dc4fc24d7c921d4de2bc63144f8616a5dc5641c29b548d11a1fef11145c03 .card-comment-count');
+              if(el) el.innerHTML = count;
+          });
+          leanCloud.getVisitCount('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', function(count){
+              var el = document.querySelector('#hashit_580dc4fc24d7c921d4de2bc63144f8616a5dc5641c29b548d11a1fef11145c03 .card-visit-count');
+              if(el) el.innerHTML = count;
+          });
+          leanCloud.getThumbUpCount('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', function(count){
+              var el = document.querySelector('#hashit_580dc4fc24d7c921d4de2bc63144f8616a5dc5641c29b548d11a1fef11145c03 .card-thumbup-count');
+              if(el) el.innerHTML = count;
+          });
+          leanCloud.isThumbUp('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', function(isThumbUp){
+              var el = document.querySelector('#hashit_580dc4fc24d7c921d4de2bc63144f8616a5dc5641c29b548d11a1fef11145c03 .card-thumbup-container i');
               if(el){
                 if(isThumbUp){
                   el.className = 'fas fa-thumbs-up';
