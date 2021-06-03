@@ -401,12 +401,12 @@ crossorigin="anonymous"></script>
 <h3 id="源码下载"><a href="#源码下载" class="headerlink" title="源码下载"></a>源码下载</h3><p>拉取代码，checkout到想要调试的版本(这里切到v6.1.0，<strong>需要注意的是不同ES分支对gradle版本要求不一样，可以到README文件中查看对应到gradle版本要求</strong>)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com/elastic/elasticsearch</span><br><span class="line">cd elasticsearch</span><br><span class="line">git checkout v6.1.0</span><br></pre></td></tr></table></figure>
 <h3 id="导入到IDEA"><a href="#导入到IDEA" class="headerlink" title="导入到IDEA"></a>导入到IDEA</h3><p>执行gradle idea,成功后会提示BUILD SUCCESSFUL，然后导入到IDEA</p>
-<p><img src="source/images/gradle_idea.png" alt="avatar"></p>
+<p><img src="/images/gradle_idea.png" alt="avatar"></p>
 <h3 id="使用gradle启动Elasticsearch"><a href="#使用gradle启动Elasticsearch" class="headerlink" title="使用gradle启动Elasticsearch"></a>使用gradle启动Elasticsearch</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle run --debug-jvm</span><br></pre></td></tr></table></figure>
 <p>执行成功后是这样的，其中8000就是远程debug端口</p>
-<p><img src="source/images/gradle_idea1.png" alt="avatar"></p>
+<p><img src="/images/gradle_idea1.png" alt="avatar"></p>
 <h3 id="配置remote-debug"><a href="#配置remote-debug" class="headerlink" title="配置remote debug"></a>配置remote debug</h3><p>点击IDEA的Edit Configurations，再点击+，填写主机和端口，Name是配置名称，可以自定义（我这里就填es），点OK保存配置</p>
-<p><img src="source/images/gradle_idea2.png" alt="avatar"></p>
+<p><img src="/images/gradle_idea2.png" alt="avatar"></p>
 <p> 搜一下源码里面Elasticsearch类，，看到Main方法，先打个断点等会看效果</p>
 <p><img src="https:////upload-images.jianshu.io/upload_images/8979564-14416bf38233ae70.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp" alt="img"></p>
 <p>image.png</p>
