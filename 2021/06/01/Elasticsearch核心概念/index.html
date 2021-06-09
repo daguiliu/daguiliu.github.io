@@ -10,7 +10,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
   
-      <title>Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码 - 望尽天涯路</title>
+      <title>Elasticsearch核心概念 - 望尽天涯路</title>
   
 
   
@@ -130,7 +130,7 @@ crossorigin="anonymous"></script>
 
 <div class='toc-container'>
 <i class="far fa-times-circle" id='toc-close' onclick='closeTOC(event);' ontouchstart='closeTOC(event);'></i>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开篇"><span class="toc-number">1.</span> <span class="toc-text">开篇</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤"><span class="toc-number">2.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">3.</span> <span class="toc-text">原理</span></a></li></ol>
+
 </div>
 
 	</div>
@@ -264,14 +264,14 @@ crossorigin="anonymous"></script>
 
 
 
-<article class="article" id="/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/" data-name='Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码' data-version="">
+<article class="article" id="/2021/06/01/Elasticsearch核心概念/" data-name='Elasticsearch核心概念' data-version="">
 
     <!-- Title -->
     <div class='article-header'>
          
          <h1 class='article-title'>
-            <a href="/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/">
-                Elasticsearch源码-使用Intellij IDEA和remote Debug调试源代码
+            <a href="/2021/06/01/Elasticsearch核心概念/">
+                Elasticsearch核心概念
             </a>
         </h1>
         <!-- TODO: support nested categories,display them nicely -->
@@ -290,7 +290,7 @@ crossorigin="anonymous"></script>
     <!-- Date and Author -->
     <div class='article-meta'>
     <ul>
-            <li><i class='fa fa-calendar'></i> 2018-08-25</li>
+            <li><i class='fa fa-calendar'></i> 2021-06-01</li>
             
             <li class='comment-button'><a href='#article-comment'><i class='fa fa-comments'></i> <span id='article-comment-count'>0</span></a></li>
             <li><i class="fa fa-eye"></i> <span id='article-visit-count'>0</span></li>
@@ -370,10 +370,11 @@ crossorigin="anonymous"></script>
   <h3>Quick Read</h3>
 </div>
 <div class="card-text">
-  <p id='text-post-summary'>开篇学习源码第一步就是搭建调试环境，但是看了网上大部分Elasticsearch调试方式都是配置各种环境变量然后直接启动Main方法，而且还各种报错。今天提供新的方式－－remote debug来避免这些麻烦。
-步骤环境首先要安装jdk8，gradle和Intellij IDEA
-源码下载拉取代码，checkout到想要调试的版本(这里切到v6.1.0，需要注意的是不同ES分支对gradle版本要求不一样，可以到README文件中查看对应到gradle版本要求)
-123git clone git@github.com/elastic/elasticsearchcd...</p>
+  <p id='text-post-summary'>ES概述ElasticSearch,简称es。es是一个开源的高拓展的分布式全文检索引擎，它可以近乎实施的存储、检索数据；本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数据。es也使用java开发并使用Lucene 作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从而让全文搜索变得简单。
+谁在使用
+维基百科，类似百度百科，全文检索，高亮，搜索推荐
+国外新闻网站，类似搜狐新闻，用户行为日志（点击，浏览，收藏，评论）+社交网络数据，数据分析…
+Stack Overflow国外的程序异常讨论论坛...</p>
 </div>
         </div> -->
     </div>
@@ -391,35 +392,119 @@ crossorigin="anonymous"></script>
 
 <div class='toc-container'>
 <i class="far fa-times-circle" id='toc-close' onclick='closeTOC(event);' ontouchstart='closeTOC(event);'></i>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开篇"><span class="toc-number">1.</span> <span class="toc-text">开篇</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤"><span class="toc-number">2.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">3.</span> <span class="toc-text">原理</span></a></li></ol>
+
 </div>
 
     </div>
     <div class='article-content'>
-    <h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>学习源码第一步就是搭建调试环境，但是看了网上大部分Elasticsearch调试方式都是配置各种环境变量然后直接启动Main方法，而且还各种报错。今天提供新的方式－－remote debug来避免这些麻烦。</p>
-<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>首先要安装jdk8，gradle和Intellij IDEA</p>
-<h3 id="源码下载"><a href="#源码下载" class="headerlink" title="源码下载"></a>源码下载</h3><p>拉取代码，checkout到想要调试的版本(这里切到v6.1.0，<strong>需要注意的是不同ES分支对gradle版本要求不一样，可以到README文件中查看对应到gradle版本要求</strong>)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com/elastic/elasticsearch</span><br><span class="line">cd elasticsearch</span><br><span class="line">git checkout v6.1.0</span><br></pre></td></tr></table></figure>
-<h3 id="导入到IDEA"><a href="#导入到IDEA" class="headerlink" title="导入到IDEA"></a>导入到IDEA</h3><p>执行gradle idea,成功后会提示BUILD SUCCESSFUL，然后导入到IDEA</p>
-<p><img src="/images/gradle_idea.png" alt="avatar"></p>
-<h3 id="使用gradle启动Elasticsearch"><a href="#使用gradle启动Elasticsearch" class="headerlink" title="使用gradle启动Elasticsearch"></a>使用gradle启动Elasticsearch</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle run --debug-jvm</span><br></pre></td></tr></table></figure>
-<p>执行成功后是这样的，其中8000就是远程debug端口</p>
-<p><img src="/images/gradle_idea1.png" alt="avatar"></p>
-<h3 id="配置remote-debug"><a href="#配置remote-debug" class="headerlink" title="配置remote debug"></a>配置remote debug</h3><p>点击IDEA的Edit Configurations，再点击+，填写主机和端口，Name是配置名称，可以自定义（我这里就填es），点OK保存配置</p>
-<p><img src="/images/gradle_idea2.png" alt="avatar"></p>
-<p> 搜一下源码里面Elasticsearch类，，看到Main方法，先打个断点等会看效果</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/8979564-14416bf38233ae70.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp" alt="img"></p>
-<p> 最后再点下绿色小虫子启动debug</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/8979564-9cdac8aa8f143143.png?imageMogr2/auto-orient/strip|imageView2/2/w/384/format/webp" alt="img"></p>
-<p>是不是在断点停下来了</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/8979564-9fe4b4b86b7c2cf9.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp" alt="img"></p>
-<p> 跳过断点再看下控制台，是不是启动日志都出来了</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/8979564-127bcc573054419f.png?imageMogr2/auto-orient/strip|imageView2/2/w/1118/format/webp" alt="img"></p>
-<p> 再验证下是否启动成功</p>
-<p><img src="https:////upload-images.jianshu.io/upload_images/8979564-77478d862072b6d2.png?imageMogr2/auto-orient/strip|imageView2/2/w/826/format/webp" alt="img"></p>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>一切源于被称作 Agent 的东西。JVM有一种特性，可以允许外部的库（Java或C++写的libraries）在运行时注入到 JVM 中。这些外部的库就称作 Agents, 他们有能力修改运行中 .class 文件的内容。<br> 这些 Agents 拥有的这些 JVM 的功能权限， 是在 JVM 内运行的 Java Code 所无法获取的， 他们能用来做一些有趣的事情，比如修改运行中的源码， 性能分析等。 像 JRebel 工具就是用了这些功能达到魔术般的效果。<br> 传递一个 Agent Lib 给 JVM, 通过添加 agentlib:libname[=options] 格式的启动参数即可办到。像上面的远程调试我们用的就是 -agentlib:jdwp=… 来引入 jdwp 这个 Agent 的。<br> jdwp 是一个 JVM 特定的 JDWP（Java Debug Wire Protocol） 可选实现，用来定义调试者与运行JVM之间的通讯，它的是通过 JVM 本地库的 jdwp.so 或者 jdwp.dll 支持实现的。简单来说， jdwp agent 会建立运行应用的 JVM 和调试者（本地或者远程）之间的桥梁。既然他是一个Agent Library, 它就有能力拦截运行的代码。<br> 在 JVM 架构里， debugging 功能在 JVM 本身的内部是找不到的，它是一种抽象到外部工具的方式（也称作调试者 debugger）。这些调试工具或者运行在 JVM 的本地 或者在远程。这是一种解耦，模块化的架构。</p>
-<p>关于Agent还有很多值得研究的细节，甚至基于JVMTI自己实现。参考<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-jpda2%2Findex.html" target="_blank" rel="noopener">https://www.ibm.com/developerworks/cn/java/j-lo-jpda2/index.html</a></p>
-
+    <h3 id="ES概述"><a href="#ES概述" class="headerlink" title="ES概述"></a>ES概述</h3><p>ElasticSearch,简称es。es是一个开源的高拓展的分布式全文检索引擎，它可以近乎实施的存储、检索数据；本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数据。es也使用java开发并使用Lucene 作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从而让全文搜索变得简单。</p>
+<h3 id="谁在使用"><a href="#谁在使用" class="headerlink" title="谁在使用"></a>谁在使用</h3><ul>
+<li>维基百科，类似百度百科，全文检索，高亮，搜索推荐</li>
+<li>国外新闻网站，类似搜狐新闻，用户行为日志（点击，浏览，收藏，评论）+社交网络数据，数据分析…</li>
+<li>Stack Overflow国外的程序异常讨论论坛 </li>
+<li>GitHub（开源代码管理），搜索上千亿行代码</li>
+<li>站内搜索，商业智能系统，电商网站</li>
+<li>日志数据分析，logstash采集日志，ES进行复杂的数据分析，ELK技术（elasticsearch+logstash+kibana）</li>
+</ul>
+<h3 id="索引、类型、文档"><a href="#索引、类型、文档" class="headerlink" title="索引、类型、文档"></a>索引、类型、文档</h3><p>ElasticSearch是面向文档型的数据库，一条数据在这里就是一个文档。比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;name&quot; :     &quot;John&quot;,</span><br><span class="line">&quot;sex&quot; :      &quot;Male&quot;,</span><br><span class="line">&quot;age&quot; :      25,</span><br><span class="line">&quot;birthDate&quot;: &quot;1990/05/01&quot;,</span><br><span class="line">&quot;about&quot; :    &quot;I love to go rock climbing&quot;,</span><br><span class="line">&quot;interests&quot;: [ &quot;sports&quot;, &quot;music&quot; ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ElasticSearch是面向文档型的数据库，一条数据在这里就是一个文档。比如：</p>
+<table>
+<thead>
+<tr>
+<th>关系型数据库</th>
+<th>ElasticSerch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据库</td>
+<td>索引</td>
+</tr>
+<tr>
+<td>表</td>
+<td>type</td>
+</tr>
+<tr>
+<td>行</td>
+<td>document</td>
+</tr>
+<tr>
+<td>列</td>
+<td>field</td>
+</tr>
+</tbody>
+</table>
+<p><strong>es中可以包含多个索引（数据库），每个索引中可以包含多个类型（表），每个类型下又包含多个文档（行），每个文档又包含多个字段（列）。</strong></p>
+<h3 id="倒排索引"><a href="#倒排索引" class="headerlink" title="倒排索引"></a>倒排索引</h3><p>ES使用一种称为倒排索引的结构，它适用于快速的全文搜索。倒排索引是搜索引擎的核心。搜索引擎的主要目标是在查找发生搜索条件的文档时提供快速搜索。ES中的倒排索引其实就是 lucene 的倒排索引，区别于传统的正向索引， 倒排索引会在存储数据时将关键词和数据进行关联，保存到倒排表中，然后查询时，将查询内容进行分词后在倒排表中进行查询，最后匹配数据即可。</p>
+<p>正排索引（传统）</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1000</td>
+<td>my name is david</td>
+</tr>
+<tr>
+<td>1001</td>
+<td>david is boy</td>
+</tr>
+</tbody>
+</table>
+<p>倒排索引</p>
+<table>
+<thead>
+<tr>
+<th>keyword</th>
+<th>id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>my</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>name</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>is</td>
+<td>1000,1001</td>
+</tr>
+<tr>
+<td>david</td>
+<td>1000,1001</td>
+</tr>
+<tr>
+<td>boy</td>
+<td>1001</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ES架构"><a href="#ES架构" class="headerlink" title="ES架构"></a>ES架构</h3><p><img src="/images/img_5.png" alt="avatar"></p>
+<p>一个运行中的Elasticsearch实例称为一个节点，而集群是由一个或者多个拥有相同cluster.name配置的节点组成，它们共同承担数据和负载的压力。当有节点加入集群中或者从集群中移除节点时，集群将会重新平均分布所有的数据。<br>当一个节点被选举成为主节点时，它将负责管理集群范围内的所有变更，例如增加、删除索引，或者增加、删除节点等。而主节点并不需要涉及到文档级别的变更和搜索等操作，所以当集群只拥有一个主节点的情况下，即使流量的增加它也不会成为瓶颈。 任何节点都可以成为主节点。</p>
+<h3 id="分片Shards"><a href="#分片Shards" class="headerlink" title="分片Shards"></a>分片Shards</h3><p>一个索引可以存储超出单个节点硬件限制的大量数据。比如，一个具有10亿文档数据的索引占据 1TB 的磁盘空间，任一节点都可能没有这样大的磁盘空间。或者单个节点处理搜索请求，响应太慢。<br>为了解决这个问题，Elasticsearch提供了将索引划分成多份的能力，每一份就称之为分片。创建一个索引的时候，就可以指定想要的分片的数量。每个分片本身也是一个功能完善并且独立的“索引”，这个“索引”可以被放置到集群中的任何节点上。</p>
+<p>分片很重要，主要有两方面的原因：</p>
+<ul>
+<li>水平分割，提供系统容量</li>
+<li>分片后可以进行分布式的、并行的操作，进而提高性能/吞吐量。<h3 id="副本Replicas"><a href="#副本Replicas" class="headerlink" title="副本Replicas"></a>副本Replicas</h3>在一个网络/云的环境里，某个分片/节点故障随时都可能发生。为了解决这个问题， Elasticsearch允许创建分片的一份或多份拷贝，这些拷贝叫做复制分片(副本)。</li>
+</ul>
+<p>复制分片之所以重要，有两个主要原因：</p>
+<ul>
+<li>在分片/节点失败的情况下，提供了高可用性。因为这个原因，复制分片从不与原/主分片置于同一节点上是非常重要的。</li>
+<li>扩展系统的搜索量/吞吐量，因为搜索可以在所有的副本上并行运行。</li>
+</ul>
+<p>分片和复制的数量可以在索引创建的时候指定。在索引创建之后，你可以在任何时候动态地改变复制的数量，但是你事后不能改变分片的数量。</p>
+<h3 id="路由计算"><a href="#路由计算" class="headerlink" title="路由计算"></a>路由计算</h3><p>当我们创建文档时，es如何决定这个文档应当被存储在分片1还是分片2中？是根据下面这个公式决定的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shard = hash(routing) % number_of_primary_shards</span><br></pre></td></tr></table></figure></p>
+<p>routing 是一个可变值，默认是文档的 _id ，也可以设置成一个自定义的值。 routing 通过hash 函数生成一个数字，然后这个数字再除以 number_of_primary_shards （主分片的数量）后得到余数。</p>
+<h3 id="分片控制"><a href="#分片控制" class="headerlink" title="分片控制"></a>分片控制</h3><p>我们可以发送请求到集群中的任一节点。每个节点都有能力处理任意请求，每个节点都知道集群中任一文档位置。集群默认就会做负载均衡。</p>
+<p><img src="/images/img_3.png" alt="avatar"></p>
+<h3 id="数据写流程"><a href="#数据写流程" class="headerlink" title="数据写流程"></a>数据写流程</h3>
     
     </div>
     
@@ -469,7 +554,7 @@ crossorigin="anonymous"></script>
 
 <div class='toc-container'>
 <i class="far fa-times-circle" id='toc-close' onclick='closeTOC(event);' ontouchstart='closeTOC(event);'></i>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开篇"><span class="toc-number">1.</span> <span class="toc-text">开篇</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤"><span class="toc-number">2.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">3.</span> <span class="toc-text">原理</span></a></li></ol>
+
 </div>
 
 	</div>
@@ -605,7 +690,7 @@ crossorigin="anonymous"></script>
   loadjs(['/libs/jshashes/hashes.min.js', '/libs/js-cookie/src/js.cookie.js', '/js/post.v2.js'], 'post-version');
   loadjs.ready('post-version', function(){
     
-    new Postv2('hashit_580dc4fc24d7c921d4de2bc63144f8616a5dc5641c29b548d11a1fef11145c03').update('hashit_91db3c892282ec783c089e47d8945c3464421383c613e423433e0b6b218d729b', function(){});
+    new Postv2('hashit_aa88ecfd5b0bc457fb1fd673f2100bdb0277660e044c85859a7bc1ef022150d9').update('hashit_c0adff4c34831c8f550af01b6c48363e33fc89b6457178eb9f693fbccd6a0b8b', function(){});
   });
   
 </script>
@@ -621,42 +706,42 @@ crossorigin="anonymous"></script>
     
     LeanCloud.init('OWA6ER4W1Bs9uSbznd4IdXnf-gzGzoHsz', 'vjt17SYhxGl9L7oCD37DbXsi');
     var leanCloud = LeanCloud.getInstance();
-    leanCloud.fetchIsThumbUp('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', user_ip);
+    leanCloud.fetchIsThumbUp('/2021/06/01/Elasticsearch核心概念/', user_ip);
     document.getElementById('thumb-up-button').addEventListener('click', function(e){
-      leanCloud.isThumbUp('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', function(isThumbUp){
+      leanCloud.isThumbUp('/2021/06/01/Elasticsearch核心概念/', function(isThumbUp){
         console.log('is thumb up:' + isThumbUp);
         if(isThumbUp){
-          leanCloud.removeThumbUpRecord('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', user_ip);
+          leanCloud.removeThumbUpRecord('/2021/06/01/Elasticsearch核心概念/', user_ip);
           document.getElementById('thumb-up-icon').className = "far fa-thumbs-up fa-lg";
           
         }else{
-          leanCloud.addThumbUpRecord('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', user_ip);
+          leanCloud.addThumbUpRecord('/2021/06/01/Elasticsearch核心概念/', user_ip);
           document.getElementById('thumb-up-icon').className = "fas fa-thumbs-up fa-lg";
         }
-        leanCloud.getThumbUpCount('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', function(count){
+        leanCloud.getThumbUpCount('/2021/06/01/Elasticsearch核心概念/', function(count){
             console.log('thumb up count: ' + count)
             var el = document.getElementById('article-thumbup-count');
             if(el) el.innerHTML = count;
         });
       });
     });
-    leanCloud.addVisitRecord('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', user_ip);
-    leanCloud.fetchCommentCount('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/');
-    leanCloud.fetchVisitCount('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/');
-    leanCloud.fetchThumbUpCount('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/');
-    leanCloud.getCommentCount('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', function(count){
+    leanCloud.addVisitRecord('/2021/06/01/Elasticsearch核心概念/', user_ip);
+    leanCloud.fetchCommentCount('/2021/06/01/Elasticsearch核心概念/');
+    leanCloud.fetchVisitCount('/2021/06/01/Elasticsearch核心概念/');
+    leanCloud.fetchThumbUpCount('/2021/06/01/Elasticsearch核心概念/');
+    leanCloud.getCommentCount('/2021/06/01/Elasticsearch核心概念/', function(count){
         var el = document.querySelector('#article-comment-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.getVisitCount('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', function(count){
+    leanCloud.getVisitCount('/2021/06/01/Elasticsearch核心概念/', function(count){
         var el = document.querySelector('#article-visit-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.getThumbUpCount('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', function(count){
+    leanCloud.getThumbUpCount('/2021/06/01/Elasticsearch核心概念/', function(count){
         var el = document.getElementById('article-thumbup-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.isThumbUp('/2018/08/25/Elasticsearch源码-使用Intellij IDEA和remote debug调试源代码/', function(isThumbUp){
+    leanCloud.isThumbUp('/2021/06/01/Elasticsearch核心概念/', function(isThumbUp){
         console.log('init thumb up:' + isThumbUp);
         if(isThumbUp){
           document.getElementById('thumb-up-icon').className = "fas fa-thumbs-up fa-lg";

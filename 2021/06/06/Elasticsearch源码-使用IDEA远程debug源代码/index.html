@@ -10,7 +10,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
   
-      <title>Elasticsearch部署.md - 望尽天涯路</title>
+      <title>Elasticsearch源码-使用IDEA远程debug源代码 - 望尽天涯路</title>
   
 
   
@@ -130,7 +130,7 @@ crossorigin="anonymous"></script>
 
 <div class='toc-container'>
 <i class="far fa-times-circle" id='toc-close' onclick='closeTOC(event);' ontouchstart='closeTOC(event);'></i>
-
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开篇"><span class="toc-number">1.</span> <span class="toc-text">开篇</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤"><span class="toc-number">2.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">3.</span> <span class="toc-text">原理</span></a></li></ol>
 </div>
 
 	</div>
@@ -264,14 +264,14 @@ crossorigin="anonymous"></script>
 
 
 
-<article class="article" id="/2021/05/20/Elasticsearch部署/" data-name='Elasticsearch部署.md' data-version="">
+<article class="article" id="/2021/06/06/Elasticsearch源码-使用IDEA远程debug源代码/" data-name='Elasticsearch源码-使用IDEA远程debug源代码' data-version="">
 
     <!-- Title -->
     <div class='article-header'>
          
          <h1 class='article-title'>
-            <a href="/2021/05/20/Elasticsearch部署/">
-                Elasticsearch部署.md
+            <a href="/2021/06/06/Elasticsearch源码-使用IDEA远程debug源代码/">
+                Elasticsearch源码-使用IDEA远程debug源代码
             </a>
         </h1>
         <!-- TODO: support nested categories,display them nicely -->
@@ -290,7 +290,7 @@ crossorigin="anonymous"></script>
     <!-- Date and Author -->
     <div class='article-meta'>
     <ul>
-            <li><i class='fa fa-calendar'></i> 2021-05-20</li>
+            <li><i class='fa fa-calendar'></i> 2021-06-06</li>
             
             <li class='comment-button'><a href='#article-comment'><i class='fa fa-comments'></i> <span id='article-comment-count'>0</span></a></li>
             <li><i class="fa fa-eye"></i> <span id='article-visit-count'>0</span></li>
@@ -311,15 +311,7 @@ crossorigin="anonymous"></script>
 <div class="tags">
 	
 		
-			<label class='tag-1'><a href="/tags/docker/">Docker</a></label>
-		
-	
-		
-			<label class='tag-2'><a href="/tags/es/">Es</a></label>
-		
-	
-		
-			<label class='tag-3'><a href="/tags/linux/">Linux</a></label>
+			<label class='tag-1'><a href="/tags/es/">Es</a></label>
 		
 	
 	</div>
@@ -378,9 +370,10 @@ crossorigin="anonymous"></script>
   <h3>Quick Read</h3>
 </div>
 <div class="card-text">
-  <p id='text-post-summary'>1、拉取镜像1docker pull elasticsearch:7.12.1
-2、创建并启动容器1docker run -d --name es -p 9200:9200 -p 9300:9300 -e ES_JAVA_OPTS=&quot;-Xms512m -Xmx512m&quot; -e &quot;discovery.type=single-node&quot; elasticsearch:7.12.1
-创建时，调整内存的分配“ES_JAVA_OPTS=-Xms512m...</p>
+  <p id='text-post-summary'>开篇学习源码第一步就是搭建调试环境。网上很多Elasticsearch调试方式都是配置各种环境变量然后直接启动Main方法，而且还各种报错。今天提供新的方式——remote debug来避免这些麻烦。
+步骤环境首先要安装jdk8，gradle和Intellij IDEA
+源码下载拉取代码，checkout到想要调试的版本(这里切到v6.1.0，需要注意的是不同ES分支对gradle版本要求不一样，可以到README文件中查看对应到gradle版本要求)
+123git clone git@github.com/elastic/elasticsearchcd...</p>
 </div>
         </div> -->
     </div>
@@ -398,34 +391,32 @@ crossorigin="anonymous"></script>
 
 <div class='toc-container'>
 <i class="far fa-times-circle" id='toc-close' onclick='closeTOC(event);' ontouchstart='closeTOC(event);'></i>
-
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开篇"><span class="toc-number">1.</span> <span class="toc-text">开篇</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤"><span class="toc-number">2.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">3.</span> <span class="toc-text">原理</span></a></li></ol>
 </div>
 
     </div>
     <div class='article-content'>
-    <p>1、拉取镜像<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull elasticsearch:7.12.1</span><br></pre></td></tr></table></figure></p>
-<p>2、创建并启动容器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name es -p 9200:9200 -p 9300:9300 -e ES_JAVA_OPTS=&quot;-Xms512m -Xmx512m&quot; -e &quot;discovery.type=single-node&quot; elasticsearch:7.12.1</span><br></pre></td></tr></table></figure></p>
-<p>创建时，调整内存的分配“ES_JAVA_OPTS=-Xms512m -Xmx512m”，<br>增加9200/9300的端口映射。</p>
-<p>3、检测是否可以正常访问</p>
-<p><a href="http://192.168.1.162:9200/" target="_blank" rel="noopener">http://192.168.1.162:9200/</a><br><img src="/images/02.png" alt="avatar"></p>
-<p>4、找到es配置文件elasticsearch.yaml，配置跨域<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it es /bin/bash</span><br><span class="line">cd config</span><br><span class="line">vi elasticsearch.yaml</span><br></pre></td></tr></table></figure></p>
-<p>在文件末尾加上以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http.cors.enabled: true</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br></pre></td></tr></table></figure></p>
-<p><img src="/images/img.png" alt="avatar"></p>
-<ul>
-<li>cluster.name：自定义集群名称；</li>
-<li>network.host：当前es节点绑定的ip地址；</li>
-<li>http.cors.enabled：是否支持跨域，默认为false；</li>
-<li>http.cors.allow-origin：当设置允许跨域，默认为*，表示支持所有域名，如果我们只是允许某些网站能访问，那么可以使用正则表达式。</li>
-</ul>
-<p>5、安装es-head可视化插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull elasticsearch-head:5</span><br><span class="line">docker run -d -p 9100:9100 mobz/elasticsearch-head:5</span><br></pre></td></tr></table></figure></p>
-<p>访问地址：<a href="http://192.168.1.162:9100/" target="_blank" rel="noopener">http://192.168.1.162:9100/</a></p>
-<p>6、安装对应版本的kibana<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull kibana:7.12.1</span><br><span class="line">docker run -d -p 5601:5601 kibana:7.12.1</span><br></pre></td></tr></table></figure></p>
-<p>访问地址：<a href="http://192.168.1.162:5601" target="_blank" rel="noopener">http://192.168.1.162:5601</a></p>
-<p>7、利用docker-compose部署es集群<br>新建 docker-compose.yml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /compose-test</span><br><span class="line">cd compose-test</span><br><span class="line">vi docker-compose.yml</span><br></pre></td></tr></table></figure></p>
-<p>复制以下内容到docker-compose.yml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">version: &apos;2.2&apos;</span><br><span class="line">services:</span><br><span class="line">  es01:</span><br><span class="line">    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1</span><br><span class="line">    container_name: es01</span><br><span class="line">    environment:</span><br><span class="line">      - node.name=es01</span><br><span class="line">      - cluster.name=es-docker-cluster</span><br><span class="line">      - discovery.seed_hosts=es02,es03</span><br><span class="line">      - cluster.initial_master_nodes=es01,es02,es03</span><br><span class="line">      - bootstrap.memory_lock=true</span><br><span class="line">      - &quot;ES_JAVA_OPTS=-Xms512m -Xmx512m&quot;</span><br><span class="line">    ulimits:</span><br><span class="line">      memlock:</span><br><span class="line">        soft: -1</span><br><span class="line">        hard: -1</span><br><span class="line">    volumes:</span><br><span class="line">      - data01:/usr/share/elasticsearch/data</span><br><span class="line">    ports:</span><br><span class="line">      - 9200:9200</span><br><span class="line">    networks:</span><br><span class="line">      - elastic</span><br><span class="line">  es02:</span><br><span class="line">    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1</span><br><span class="line">    container_name: es02</span><br><span class="line">    environment:</span><br><span class="line">      - node.name=es02</span><br><span class="line">      - cluster.name=es-docker-cluster</span><br><span class="line">      - discovery.seed_hosts=es01,es03</span><br><span class="line">      - cluster.initial_master_nodes=es01,es02,es03</span><br><span class="line">      - bootstrap.memory_lock=true</span><br><span class="line">      - &quot;ES_JAVA_OPTS=-Xms512m -Xmx512m&quot;</span><br><span class="line">    ulimits:</span><br><span class="line">      memlock:</span><br><span class="line">        soft: -1</span><br><span class="line">        hard: -1</span><br><span class="line">    volumes:</span><br><span class="line">      - data02:/usr/share/elasticsearch/data</span><br><span class="line">    networks:</span><br><span class="line">      - elastic</span><br><span class="line">  es03:</span><br><span class="line">    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1</span><br><span class="line">    container_name: es03</span><br><span class="line">    environment:</span><br><span class="line">      - node.name=es03</span><br><span class="line">      - cluster.name=es-docker-cluster</span><br><span class="line">      - discovery.seed_hosts=es01,es02</span><br><span class="line">      - cluster.initial_master_nodes=es01,es02,es03</span><br><span class="line">      - bootstrap.memory_lock=true</span><br><span class="line">      - &quot;ES_JAVA_OPTS=-Xms512m -Xmx512m&quot;</span><br><span class="line">    ulimits:</span><br><span class="line">      memlock:</span><br><span class="line">        soft: -1</span><br><span class="line">        hard: -1</span><br><span class="line">    volumes:</span><br><span class="line">      - data03:/usr/share/elasticsearch/data</span><br><span class="line">    networks:</span><br><span class="line">      - elastic</span><br><span class="line"></span><br><span class="line">volumes:</span><br><span class="line">  data01:</span><br><span class="line">    driver: local</span><br><span class="line">  data02:</span><br><span class="line">    driver: local</span><br><span class="line">  data03:</span><br><span class="line">    driver: local</span><br><span class="line"></span><br><span class="line">networks:</span><br><span class="line">  elastic:</span><br><span class="line">    driver: bridge</span><br></pre></td></tr></table></figure></p>
-<p>启动集群<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure></p>
-<p>浏览器访问:<a href="http://192.168.1.162:9100/" target="_blank" rel="noopener">http://192.168.1.162:9100/</a><br><img src="source/images/img.png" alt="avatar"></p>
-<p>参考: <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html" target="_blank" rel="noopener">ES官网</a></p>
+    <h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><p>学习源码第一步就是搭建调试环境。网上很多Elasticsearch调试方式都是配置各种环境变量然后直接启动Main方法，而且还各种报错。今天提供新的方式——remote debug来避免这些麻烦。</p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>首先要安装jdk8，gradle和Intellij IDEA</p>
+<h3 id="源码下载"><a href="#源码下载" class="headerlink" title="源码下载"></a>源码下载</h3><p>拉取代码，checkout到想要调试的版本(这里切到v6.1.0，<strong>需要注意的是不同ES分支对gradle版本要求不一样，可以到README文件中查看对应到gradle版本要求</strong>)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com/elastic/elasticsearch</span><br><span class="line">cd elasticsearch</span><br><span class="line">git checkout v6.1.0</span><br></pre></td></tr></table></figure>
+<h3 id="导入到IDEA"><a href="#导入到IDEA" class="headerlink" title="导入到IDEA"></a>导入到IDEA</h3><p>执行gradle idea,成功后会提示BUILD SUCCESSFUL，然后导入到IDEA</p>
+<p><img src="/images/gradle_idea.png" alt="avatar"></p>
+<h3 id="使用gradle启动Elasticsearch"><a href="#使用gradle启动Elasticsearch" class="headerlink" title="使用gradle启动Elasticsearch"></a>使用gradle启动Elasticsearch</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle run --debug-jvm</span><br></pre></td></tr></table></figure>
+<p>执行成功后是这样的，其中8000就是远程debug端口</p>
+<p><img src="/images/gradle_idea1.png" alt="avatar"></p>
+<h3 id="配置remote-debug"><a href="#配置remote-debug" class="headerlink" title="配置remote debug"></a>配置remote debug</h3><p>打开idea,导入es源码</p>
+<p><img src="/images/gradle_idea3.png" alt="avatar"></p>
+<p>点击idea的Edit Configurations，再点击+，填写主机和端口，Name是配置名称，可以自定义（我这里就填es），点OK保存配置</p>
+<p><img src="/images/gradle_idea2.png" alt="avatar"></p>
+<p> 搜一下源码里面RestController类，找到dispatchRequest方法，所有的请求都会在进入这个方法。先打个断点,再点击debug</p>
+<p><img src="source/_posts/gradle_idea5.png" alt="avatar"></p>
+<p>用postman发送put请求，往es增加一个名为index105的索引。</p>
+<p><img src="source/_posts/gradle_idea4.png" alt="img_4.png"></p>
+<p>然后在断点停下来了</p>
+<p><img src="source/_posts/gradle_idea6.png" alt="avatar"></p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>一切源于被称作 Agent 的东西。JVM有一种特性，可以允许外部的库（Java或C++写的libraries）在运行时注入到 JVM 中。这些外部的库就称作 Agents, 他们有能力修改运行中 .class 文件的内容。<br>这些 Agents 拥有的这些 JVM 的功能权限， 是在 JVM 内运行的 Java Code 所无法获取的， 他们能用来做一些有趣的事情，比如修改运行中的源码， 性能分析等。 像 JRebel 工具就是用了这些功能达到魔术般的效果。<br>传递一个 Agent Lib 给 JVM, 通过添加 agentlib:libname[=options] 格式的启动参数即可办到。像上面的远程调试我们用的就是 -agentlib:jdwp=… 来引入 jdwp 这个 Agent 的。<br>jdwp 是一个 JVM 特定的 JDWP（Java Debug Wire Protocol） 可选实现，用来定义调试者与运行JVM之间的通讯，它的是通过 JVM 本地库的 jdwp.so 或者 jdwp.dll 支持实现的。简单来说， jdwp agent 会建立运行应用的 JVM 和调试者（本地或者远程）之间的桥梁。既然他是一个Agent Library, 它就有能力拦截运行的代码。<br>在 JVM 架构里， debugging 功能在 JVM 本身的内部是找不到的，它是一种抽象到外部工具的方式（也称作调试者 debugger）。这些调试工具或者运行在 JVM 的本地 或者在远程。这是一种解耦，模块化的架构。</p>
+<p>关于Agent还有很多值得研究的细节，甚至基于JVMTI自己实现。参考<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-jpda2%2Findex.html" target="_blank" rel="noopener">https://www.ibm.com/developerworks/cn/java/j-lo-jpda2/index.html</a></p>
 
     
     </div>
@@ -476,7 +467,7 @@ crossorigin="anonymous"></script>
 
 <div class='toc-container'>
 <i class="far fa-times-circle" id='toc-close' onclick='closeTOC(event);' ontouchstart='closeTOC(event);'></i>
-
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开篇"><span class="toc-number">1.</span> <span class="toc-text">开篇</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤"><span class="toc-number">2.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">3.</span> <span class="toc-text">原理</span></a></li></ol>
 </div>
 
 	</div>
@@ -612,7 +603,7 @@ crossorigin="anonymous"></script>
   loadjs(['/libs/jshashes/hashes.min.js', '/libs/js-cookie/src/js.cookie.js', '/js/post.v2.js'], 'post-version');
   loadjs.ready('post-version', function(){
     
-    new Postv2('hashit_bb0cdbfd86ddfbf15eb3334b6d23e4ab13efb4b19fdd336e9c6f4cbfba074890').update('hashit_5196365f4e9cc8de4f586c2fa6aea71402b08fd09d9b2ff8f99932f222333724', function(){});
+    new Postv2('hashit_908917f36ce029ad6b41c35e6c336ecc7a02d97e2c34380378e955b731f1759e').update('hashit_ab312bcc3bdbc18089099d866319d3337952c72676fbe78a16c616d2019cbc6e', function(){});
   });
   
 </script>
@@ -628,42 +619,42 @@ crossorigin="anonymous"></script>
     
     LeanCloud.init('OWA6ER4W1Bs9uSbznd4IdXnf-gzGzoHsz', 'vjt17SYhxGl9L7oCD37DbXsi');
     var leanCloud = LeanCloud.getInstance();
-    leanCloud.fetchIsThumbUp('/2021/05/20/Elasticsearch部署/', user_ip);
+    leanCloud.fetchIsThumbUp('/2021/06/06/Elasticsearch源码-使用IDEA远程debug源代码/', user_ip);
     document.getElementById('thumb-up-button').addEventListener('click', function(e){
-      leanCloud.isThumbUp('/2021/05/20/Elasticsearch部署/', function(isThumbUp){
+      leanCloud.isThumbUp('/2021/06/06/Elasticsearch源码-使用IDEA远程debug源代码/', function(isThumbUp){
         console.log('is thumb up:' + isThumbUp);
         if(isThumbUp){
-          leanCloud.removeThumbUpRecord('/2021/05/20/Elasticsearch部署/', user_ip);
+          leanCloud.removeThumbUpRecord('/2021/06/06/Elasticsearch源码-使用IDEA远程debug源代码/', user_ip);
           document.getElementById('thumb-up-icon').className = "far fa-thumbs-up fa-lg";
           
         }else{
-          leanCloud.addThumbUpRecord('/2021/05/20/Elasticsearch部署/', user_ip);
+          leanCloud.addThumbUpRecord('/2021/06/06/Elasticsearch源码-使用IDEA远程debug源代码/', user_ip);
           document.getElementById('thumb-up-icon').className = "fas fa-thumbs-up fa-lg";
         }
-        leanCloud.getThumbUpCount('/2021/05/20/Elasticsearch部署/', function(count){
+        leanCloud.getThumbUpCount('/2021/06/06/Elasticsearch源码-使用IDEA远程debug源代码/', function(count){
             console.log('thumb up count: ' + count)
             var el = document.getElementById('article-thumbup-count');
             if(el) el.innerHTML = count;
         });
       });
     });
-    leanCloud.addVisitRecord('/2021/05/20/Elasticsearch部署/', user_ip);
-    leanCloud.fetchCommentCount('/2021/05/20/Elasticsearch部署/');
-    leanCloud.fetchVisitCount('/2021/05/20/Elasticsearch部署/');
-    leanCloud.fetchThumbUpCount('/2021/05/20/Elasticsearch部署/');
-    leanCloud.getCommentCount('/2021/05/20/Elasticsearch部署/', function(count){
+    leanCloud.addVisitRecord('/2021/06/06/Elasticsearch源码-使用IDEA远程debug源代码/', user_ip);
+    leanCloud.fetchCommentCount('/2021/06/06/Elasticsearch源码-使用IDEA远程debug源代码/');
+    leanCloud.fetchVisitCount('/2021/06/06/Elasticsearch源码-使用IDEA远程debug源代码/');
+    leanCloud.fetchThumbUpCount('/2021/06/06/Elasticsearch源码-使用IDEA远程debug源代码/');
+    leanCloud.getCommentCount('/2021/06/06/Elasticsearch源码-使用IDEA远程debug源代码/', function(count){
         var el = document.querySelector('#article-comment-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.getVisitCount('/2021/05/20/Elasticsearch部署/', function(count){
+    leanCloud.getVisitCount('/2021/06/06/Elasticsearch源码-使用IDEA远程debug源代码/', function(count){
         var el = document.querySelector('#article-visit-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.getThumbUpCount('/2021/05/20/Elasticsearch部署/', function(count){
+    leanCloud.getThumbUpCount('/2021/06/06/Elasticsearch源码-使用IDEA远程debug源代码/', function(count){
         var el = document.getElementById('article-thumbup-count');
         if(el) el.innerHTML = count;
     });
-    leanCloud.isThumbUp('/2021/05/20/Elasticsearch部署/', function(isThumbUp){
+    leanCloud.isThumbUp('/2021/06/06/Elasticsearch源码-使用IDEA远程debug源代码/', function(isThumbUp){
         console.log('init thumb up:' + isThumbUp);
         if(isThumbUp){
           document.getElementById('thumb-up-icon').className = "fas fa-thumbs-up fa-lg";

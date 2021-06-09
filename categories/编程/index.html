@@ -456,46 +456,6 @@ crossorigin="anonymous"></script>
 
 
 
-<div class='Card-archive' id='hashit_3c149c2ac4e92c8ddc4dbf26c1405a53f72cba8c4f33ad8c9c9d5dce60719e9e' data-name='springcloud' data-version=''>
-	<mark class='Card-badge'></mark>
-	<div class="Card-body">
-		<h3 class='Card-title'>
-			
-				<a href="/2018/08/17/springcloud(一)/">
-			
-			Springcloud</a>
-		</h3>
-		<div class="Card-meta">
-			<div class='Card-tags'></div>
-			<ul>
-					<li>
-						<a href="/archives/">
-							<i class='fa fa-calendar'></i> 2018-08-17
-						</a>
-					</li>
-					
-					
-					<li>
-						<a href="/2018/08/17/springcloud(一)/#article-comment">
-							<i class='fa fa-comments'></i> <span class='card-comment-count'>0</span>
-						</a>
-					</li>
-					<li>
-						<i class="fa fa-eye"></i> <span class='card-visit-count'>0</span>
-					</li>
-					
-					
-			</ul>
-		</div>
-	</div>
-</div>
-
-	
-		
-
-
-
-
 <div class='Card-archive' id='hashit_0bd2c865b90121eef2910b553a41d79aaf9a65cae971ad047a2c73ab42edd28a' data-name='深入分析Volatile的实现原理' data-version=''>
 	<mark class='Card-badge'></mark>
 	<div class="Card-body">
@@ -527,6 +487,46 @@ crossorigin="anonymous"></script>
 					
 					<li>
 						<a href="/2018/08/17/深入分析Volatile的实现原理/#article-comment">
+							<i class='fa fa-comments'></i> <span class='card-comment-count'>0</span>
+						</a>
+					</li>
+					<li>
+						<i class="fa fa-eye"></i> <span class='card-visit-count'>0</span>
+					</li>
+					
+					
+			</ul>
+		</div>
+	</div>
+</div>
+
+	
+		
+
+
+
+
+<div class='Card-archive' id='hashit_3c149c2ac4e92c8ddc4dbf26c1405a53f72cba8c4f33ad8c9c9d5dce60719e9e' data-name='springcloud' data-version=''>
+	<mark class='Card-badge'></mark>
+	<div class="Card-body">
+		<h3 class='Card-title'>
+			
+				<a href="/2018/08/17/springcloud(一)/">
+			
+			Springcloud</a>
+		</h3>
+		<div class="Card-meta">
+			<div class='Card-tags'></div>
+			<ul>
+					<li>
+						<a href="/archives/">
+							<i class='fa fa-calendar'></i> 2018-08-17
+						</a>
+					</li>
+					
+					
+					<li>
+						<a href="/2018/08/17/springcloud(一)/#article-comment">
 							<i class='fa fa-comments'></i> <span class='card-comment-count'>0</span>
 						</a>
 					</li>
@@ -893,7 +893,7 @@ crossorigin="anonymous"></script>
           
           
           
-            var postBadge = document.querySelector('#hashit_3c149c2ac4e92c8ddc4dbf26c1405a53f72cba8c4f33ad8c9c9d5dce60719e9e mark.Card-badge');
+            var postBadge = document.querySelector('#hashit_0bd2c865b90121eef2910b553a41d79aaf9a65cae971ad047a2c73ab42edd28a mark.Card-badge');
             $(postBadge).fadeOut();
             
           
@@ -901,7 +901,7 @@ crossorigin="anonymous"></script>
           
           
           
-            var postBadge = document.querySelector('#hashit_0bd2c865b90121eef2910b553a41d79aaf9a65cae971ad047a2c73ab42edd28a mark.Card-badge');
+            var postBadge = document.querySelector('#hashit_3c149c2ac4e92c8ddc4dbf26c1405a53f72cba8c4f33ad8c9c9d5dce60719e9e mark.Card-badge');
             $(postBadge).fadeOut();
             
           
@@ -1068,36 +1068,6 @@ crossorigin="anonymous"></script>
           
           
           // start caching post visit and comment counts
-          leanCloud.fetchIsThumbUp('/2018/08/17/springcloud(一)/', user_ip);
-          leanCloud.fetchCommentCount('/2018/08/17/springcloud(一)/');
-          leanCloud.fetchVisitCount('/2018/08/17/springcloud(一)/');
-          leanCloud.fetchThumbUpCount('/2018/08/17/springcloud(一)/');
-          leanCloud.getCommentCount('/2018/08/17/springcloud(一)/', function(count){
-              var el = document.querySelector('#hashit_3c149c2ac4e92c8ddc4dbf26c1405a53f72cba8c4f33ad8c9c9d5dce60719e9e .card-comment-count');
-              if(el) el.innerHTML = count;
-          });
-          leanCloud.getVisitCount('/2018/08/17/springcloud(一)/', function(count){
-              var el = document.querySelector('#hashit_3c149c2ac4e92c8ddc4dbf26c1405a53f72cba8c4f33ad8c9c9d5dce60719e9e .card-visit-count');
-              if(el) el.innerHTML = count;
-          });
-          leanCloud.getThumbUpCount('/2018/08/17/springcloud(一)/', function(count){
-              var el = document.querySelector('#hashit_3c149c2ac4e92c8ddc4dbf26c1405a53f72cba8c4f33ad8c9c9d5dce60719e9e .card-thumbup-count');
-              if(el) el.innerHTML = count;
-          });
-          leanCloud.isThumbUp('/2018/08/17/springcloud(一)/', function(isThumbUp){
-              var el = document.querySelector('#hashit_3c149c2ac4e92c8ddc4dbf26c1405a53f72cba8c4f33ad8c9c9d5dce60719e9e .card-thumbup-container i');
-              if(el){
-                if(isThumbUp){
-                  el.className = 'fas fa-thumbs-up';
-                }else{
-                  el.className = 'far fa-thumbs-up';
-                }
-              }
-          });
-        
-          
-          
-          // start caching post visit and comment counts
           leanCloud.fetchIsThumbUp('/2018/08/17/深入分析Volatile的实现原理/', user_ip);
           leanCloud.fetchCommentCount('/2018/08/17/深入分析Volatile的实现原理/');
           leanCloud.fetchVisitCount('/2018/08/17/深入分析Volatile的实现原理/');
@@ -1116,6 +1086,36 @@ crossorigin="anonymous"></script>
           });
           leanCloud.isThumbUp('/2018/08/17/深入分析Volatile的实现原理/', function(isThumbUp){
               var el = document.querySelector('#hashit_0bd2c865b90121eef2910b553a41d79aaf9a65cae971ad047a2c73ab42edd28a .card-thumbup-container i');
+              if(el){
+                if(isThumbUp){
+                  el.className = 'fas fa-thumbs-up';
+                }else{
+                  el.className = 'far fa-thumbs-up';
+                }
+              }
+          });
+        
+          
+          
+          // start caching post visit and comment counts
+          leanCloud.fetchIsThumbUp('/2018/08/17/springcloud(一)/', user_ip);
+          leanCloud.fetchCommentCount('/2018/08/17/springcloud(一)/');
+          leanCloud.fetchVisitCount('/2018/08/17/springcloud(一)/');
+          leanCloud.fetchThumbUpCount('/2018/08/17/springcloud(一)/');
+          leanCloud.getCommentCount('/2018/08/17/springcloud(一)/', function(count){
+              var el = document.querySelector('#hashit_3c149c2ac4e92c8ddc4dbf26c1405a53f72cba8c4f33ad8c9c9d5dce60719e9e .card-comment-count');
+              if(el) el.innerHTML = count;
+          });
+          leanCloud.getVisitCount('/2018/08/17/springcloud(一)/', function(count){
+              var el = document.querySelector('#hashit_3c149c2ac4e92c8ddc4dbf26c1405a53f72cba8c4f33ad8c9c9d5dce60719e9e .card-visit-count');
+              if(el) el.innerHTML = count;
+          });
+          leanCloud.getThumbUpCount('/2018/08/17/springcloud(一)/', function(count){
+              var el = document.querySelector('#hashit_3c149c2ac4e92c8ddc4dbf26c1405a53f72cba8c4f33ad8c9c9d5dce60719e9e .card-thumbup-count');
+              if(el) el.innerHTML = count;
+          });
+          leanCloud.isThumbUp('/2018/08/17/springcloud(一)/', function(isThumbUp){
+              var el = document.querySelector('#hashit_3c149c2ac4e92c8ddc4dbf26c1405a53f72cba8c4f33ad8c9c9d5dce60719e9e .card-thumbup-container i');
               if(el){
                 if(isThumbUp){
                   el.className = 'fas fa-thumbs-up';
